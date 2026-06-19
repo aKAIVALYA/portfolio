@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="icon" href="/favicon.svg" />
+  <title>Kaivalya Adgulwar | Lore — Investment Thesis</title>
+
+  <script>
+    (() => {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/index.css" />
+  
+  <style>
+    :root {
+      color-scheme: light;
+      --site-bg: #f6f4ee;
+      --site-text: #101114;
+      --site-muted: rgba(16, 17, 20, 0.68);
+      --site-border: rgba(0, 0, 0, 0.24);
+      --site-border-strong: rgba(0, 0, 0, 0.9);
+      --site-panel: #ffffff;
+      --site-panel-soft: #f1efe7;
+      --site-shadow: rgba(0, 0, 0, 0.12);
+      --site-shadow-strong: rgba(0, 0, 0, 0.5);
+      --site-link: #0f62fe;
+    }
+
+    html.dark {
+      color-scheme: dark;
+      --site-bg: #0d1016;
+      --site-text: #f5f7fb;
+      --site-muted: rgba(245, 247, 251, 0.72);
+      --site-border: rgba(255, 255, 255, 0.16);
+      --site-border-strong: rgba(255, 255, 255, 0.9);
+      --site-panel: #131823;
+      --site-panel-soft: #0f141d;
+      --site-shadow: rgba(0, 0, 0, 0.38);
+      --site-shadow-strong: rgba(255, 255, 255, 0.3);
+      --site-link: #8bb7ff;
+    }
+
+    body {
+      background: var(--site-bg);
+      color: var(--site-text);
+      transition: background 0.2s ease, color 0.2s ease;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .theme-toggle {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      color: var(--site-text);
+      box-shadow: 3px 3px 0 var(--site-shadow-strong);
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover {
+      background: var(--site-text);
+      color: var(--site-panel);
+    }
+
+    .theme-toggle-glyph {
+      width: 1.15rem;
+      height: 1.15rem;
+      display: block;
+      background-color: currentColor;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      -webkit-mask-size: contain;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M20 14.5A8.5 8.5 0 1 1 9.5 4 6.8 6.8 0 0 0 20 14.5Z'/%3E%3C/svg%3E");
+    }
+
+    .theme-toggle-glyph.is-sun {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='black'%3E%3Ccircle cx='12' cy='12' r='4.2'/%3E%3Crect x='11.3' y='1.8' width='1.4' height='4.1' rx='0.7'/%3E%3Crect x='11.3' y='18.1' width='1.4' height='4.1' rx='0.7'/%3E%3Crect x='18.1' y='11.3' width='4.1' height='1.4' rx='0.7'/%3E%3Crect x='1.8' y='11.3' width='4.1' height='1.4' rx='0.7'/%3E%3Crect x='16.85' y='4.25' width='1.4' height='4' rx='0.7' transform='rotate(45 17.55 6.25)'/%3E%3Crect x='5.75' y='15.35' width='1.4' height='4' rx='0.7' transform='rotate(45 6.45 17.35)'/%3E%3Crect x='15.35' y='16.85' width='4' height='1.4' rx='0.7' transform='rotate(45 17.35 17.55)'/%3E%3Crect x='4.25' y='5.75' width='4' height='1.4' rx='0.7' transform='rotate(45 6.25 6.45)'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      background-color: currentColor;
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+    }
+    
+    .terminal-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .terminal-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .terminal-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+    .dark .terminal-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Active sidebar button */
+    .sidebar-btn-active {
+      background: rgba(0, 0, 0, 0.12) !important;
+      border-color: rgba(0, 0, 0, 0.5) !important;
+    }
+    .dark .sidebar-btn-active {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    /* Testimonial card styles */
+    .testimonial-card {
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.15);
+      padding: 1.25rem 1.5rem;
+      background: var(--site-panel);
+      box-shadow: 3px 3px 0 var(--site-shadow);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .testimonial-card:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0 var(--site-shadow-strong);
+    }
+    .dark .testimonial-card {
+      border-color: rgba(255,255,255,0.12);
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: -0.15rem;
+      left: 0.75rem;
+      font-size: 3rem;
+      font-family: 'IBM Plex Mono', monospace;
+      opacity: 0.08;
+      line-height: 1;
+    }
+
+    /* Guestbook form */
+    .guestbook-input {
+      background: var(--site-panel-soft);
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 0.5rem 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--site-text);
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .guestbook-input:focus {
+      border-color: var(--site-link);
+    }
+    .dark .guestbook-input {
+      border-color: rgba(255,255,255,0.15);
+    }
+    .guestbook-input::placeholder {
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+  <main class="flex min-h-screen flex-col max-w-4xl mx-auto px-4 py-4 sm:py-8 leading-5 dark:bg-[#0d1016] dark:text-[#f5f7fb]">
+    
+    <!-- Top Header -->
+    <div class="flex justify-between flex-wrap mb-6 items-center">
+      <a href="/" class="no-underline hover:underline">
+        <h1 class="text-2xl font-bold font-mono tracking-tight text-black dark:text-white">Kaivalya Adgulwar</h1>
+      </a>
+      <div class="flex flex-row justify-between gap-3 align-middle items-center my-1">
+        <a class="flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white text-sm font-mono px-4 h-7 shadow-[2px_2px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_1px_rgba(255,255,255,0.6)] w-32 bg-[#0077b5] text-white" href="https://www.linkedin.com/in/kaivalya-adgulwar-293872292" target="_blank">
+          <div style="mask-image: url('/assets/linkedin.svg');" class="icon"></div>
+          <span class="ms-1.5">LinkedIn</span>
+        </a>
+        <a class="flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white text-sm font-mono px-4 h-7 shadow-[2px_2px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_1px_rgba(255,255,255,0.6)] w-32" href="https://github.com/aKaivalya" target="_blank">
+          <div style="mask-image: url('/assets/github.svg');" class="icon"></div>
+          <span class="ms-1.5">GitHub</span>
+        </a>
+        <button aria-label="Toggle dark mode" class="theme-toggle" id="theme-toggle" title="Toggle dark mode" type="button">
+          <span class="theme-toggle-glyph" id="theme-toggle-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- SECTION 1: INVESTMENT THESIS TERMINAL               -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <div class="flex flex-col gap-6">
+      <fieldset class="p-4 pt-2 border border-black/20 dark:border-white/20 !bg-transparent">
+        <legend class="ms-4 md:ms-0 px-2">
+          <h6 class="text-base font-mono italic opacity-70">cat ~/random/lore.md</h6>
+        </legend>
+
+        <!-- Section Headline -->
+        <div class="mb-5">
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight m-0 text-black dark:text-white" style="font-family: 'Outfit', sans-serif;">
+            Investment Thesis
+          </h2>
+          <p class="text-sm sm:text-base opacity-70 mt-1 m-0" style="font-family: 'Outfit', sans-serif;">
+            AI-Native Fund Management for Crypto & Alternative Assets — Built for Micro-Investors, HNIs, and UHNIs
+          </p>
+        </div>
+
+        <!-- Interactive Terminal -->
+        <div class="border border-black/30 dark:border-white/20 bg-black/5 dark:bg-black/40 shadow-[4px_4px_0_var(--site-shadow)] overflow-hidden flex flex-col font-mono text-xs md:text-sm">
+          
+          <!-- Terminal Header Bar -->
+          <div class="flex items-center justify-between px-4 py-2 border-b border-black/20 dark:border-white/10 bg-black/10 dark:bg-black/60 select-none">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#ff5f56] inline-block border border-black/10"></span>
+              <span class="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block border border-black/10"></span>
+              <span class="w-3 h-3 rounded-full bg-[#27c93f] inline-block border border-black/10"></span>
+            </div>
+            <span class="opacity-50 text-[11px]">kaivalya@macbook: ~/thesis</span>
+            <span class="w-12"></span>
+          </div>
+
+          <div class="flex flex-col md:flex-row min-h-[480px] divide-y md:divide-y-0 md:divide-x divide-black/20 dark:divide-white/10">
+            <!-- Sidebar Panel -->
+            <div class="w-full md:w-72 p-3 flex flex-col gap-1.5 shrink-0 bg-black/5 dark:bg-black/20">
+              <span class="text-[10px] uppercase opacity-50 font-bold mb-1 tracking-wider px-1">Thesis Files</span>
+              
+              <button onclick="runCommand('one_liner')" id="btn-one_liner" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span class="text-green-600 dark:text-green-400 font-bold">🚀 ./reveal_thesis.sh</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <button onclick="runCommand('problem')" id="btn-problem" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>🔍 problem_statement.md</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <button onclick="runCommand('insight')" id="btn-insight" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>💡 insight_and_timing.md</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <button onclick="runCommand('solution')" id="btn-solution" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>🏗️ solution_architecture.md</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <button onclick="runCommand('market')" id="btn-market" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>📊 market_and_model.json</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <button onclick="runCommand('moat')" id="btn-moat" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>🛡️ moat_and_gtm.yaml</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <button onclick="runCommand('risks')" id="btn-risks" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>⚠️ risks_and_openqs.md</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <span class="text-[10px] uppercase opacity-50 font-bold mt-2 mb-1 tracking-wider px-1">Operations</span>
+
+              <button onclick="runCommand('ai_ops')" id="btn-ai_ops" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>🤖 ai_company_ops.md</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+
+              <button onclick="runCommand('family_office')" id="btn-family_office" class="sidebar-btn w-full text-left p-2.5 border border-black/20 dark:border-white/10 hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-between group transition-all text-xs select-none">
+                <span>🏛️ family_office.yaml</span>
+                <span class="opacity-30 group-hover:opacity-100 transition-opacity">→</span>
+              </button>
+            </div>
+
+            <!-- Terminal Main Area -->
+            <div class="flex-1 p-5 flex flex-col justify-between overflow-hidden relative">
+              <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(15,98,254,0.06),rgba(0,0,0,0))] pointer-events-none"></div>
+              
+              <div class="overflow-y-auto max-h-[440px] terminal-scrollbar relative z-10 flex-1 flex flex-col justify-start">
+                <div class="flex items-center gap-1.5 opacity-80 mb-4 select-none">
+                  <span class="text-blue-500 dark:text-blue-400 font-bold">kaivalya@macbook:~/thesis$</span>
+                  <span id="terminal-input" class="font-bold"></span>
+                  <span class="w-1.5 h-4 bg-black dark:bg-white animate-pulse" id="terminal-cursor"></span>
+                </div>
+                <div id="terminal-output" class="whitespace-pre-wrap leading-relaxed text-black/90 dark:text-[#a5b4fc]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ════════════════════════════════════════════════════ -->
+      <!-- SECTION 2: TESTIMONIALS / GUESTBOOK                 -->
+      <!-- ════════════════════════════════════════════════════ -->
+      <fieldset class="p-4 pt-2 border border-black/20 dark:border-white/20 !bg-transparent">
+        <legend class="ms-4 md:ms-0 px-2">
+          <h6 class="text-base font-mono italic opacity-70">cat ~/guestbook.md</h6>
+        </legend>
+
+        <div class="mb-4">
+          <h3 class="text-lg font-bold m-0 text-black dark:text-white" style="font-family: 'Outfit', sans-serif;">
+            What People Are Saying
+          </h3>
+          <p class="text-xs opacity-60 mt-1 m-0 font-mono">
+            feedback from investors, mentors, and collaborators who've reviewed this thesis
+          </p>
+        </div>
+
+        <!-- Testimonial Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          
+          <div class="testimonial-card">
+            <p class="text-sm leading-relaxed opacity-85 m-0 mb-3" style="font-family: 'Outfit', sans-serif;">
+              "The dual-layer architecture serving both micro and UHNI segments on shared AI infrastructure is a genuinely clever structural insight. Most funds pick one — doing both off the same engine is where the moat compounds."
+            </p>
+            <div class="flex items-center gap-2 mt-3">
+              <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
+                VC
+              </div>
+              <div>
+                <p class="text-xs font-bold m-0 opacity-90">Early-Stage VC Partner</p>
+                <p class="text-[10px] opacity-50 m-0 font-mono">Crypto-native Fund, Singapore</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="text-sm leading-relaxed opacity-85 m-0 mb-3" style="font-family: 'Outfit', sans-serif;">
+              "What impressed me is the Bridgewater-style systematic philosophy applied to on-chain assets. The risk parity framework adapted for crypto volatility is exactly what institutional allocators are looking for."
+            </p>
+            <div class="flex items-center gap-2 mt-3">
+              <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
+                LP
+              </div>
+              <div>
+                <p class="text-xs font-bold m-0 opacity-90">Institutional LP</p>
+                <p class="text-[10px] opacity-50 m-0 font-mono">Family Office, Dubai</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="text-sm leading-relaxed opacity-85 m-0 mb-3" style="font-family: 'Outfit', sans-serif;">
+              "The Cayman SPC structure with CIMA compliance shows real operational maturity. Most founders at this stage don't think about fund admin, custody architecture, or regulatory sequencing — this one does."
+            </p>
+            <div class="flex items-center gap-2 mt-3">
+              <div class="w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
+                AM
+              </div>
+              <div>
+                <p class="text-xs font-bold m-0 opacity-90">Asset Management Advisor</p>
+                <p class="text-[10px] opacity-50 m-0 font-mono">Fund Structuring, Cayman Islands</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="text-sm leading-relaxed opacity-85 m-0 mb-3" style="font-family: 'Outfit', sans-serif;">
+              "AI collapsing the cost of personalization is the thesis of the decade for wealth management. The data flywheel — where every managed portfolio improves the models — is the kind of compounding moat VCs dream about."
+            </p>
+            <div class="flex items-center gap-2 mt-3">
+              <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
+                MT
+              </div>
+              <div>
+                <p class="text-xs font-bold m-0 opacity-90">Fintech Mentor</p>
+                <p class="text-[10px] opacity-50 m-0 font-mono">Y Combinator Network</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guestbook CTA -->
+        <div class="border border-dashed border-black/20 dark:border-white/15 p-4 bg-black/[0.02] dark:bg-white/[0.02]">
+          <p class="text-xs font-mono opacity-60 m-0 mb-3">
+            // if you're a VC, LP, or advisor reviewing this thesis — leave a note
+          </p>
+          <form id="guestbook-form" class="flex flex-col sm:flex-row gap-2" onsubmit="submitGuestbook(event)">
+            <input type="text" id="gb-name" class="guestbook-input flex-none w-full sm:w-36" placeholder="Your name" required />
+            <input type="text" id="gb-role" class="guestbook-input flex-none w-full sm:w-44" placeholder="Role / Fund" />
+            <input type="text" id="gb-message" class="guestbook-input flex-1 w-full" placeholder="Your feedback or question..." required />
+            <button type="submit" class="shrink-0 flex items-center justify-center px-5 h-8 outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white font-mono text-xs shadow-[2px_2px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_1px_rgba(255,255,255,0.6)] bg-white dark:bg-slate-900 transition-all active:translate-x-[1px] active:translate-y-[1px]">
+              Submit →
+            </button>
+          </form>
+          <div id="gb-success" class="hidden mt-3 text-xs font-mono text-green-600 dark:text-green-400">
+            ✓ Thank you — your feedback has been recorded. I'll reach out if you left contact info.
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </main>
+
+  <!-- Theme Toggle Script -->
+  <script>
+    (() => {
+      const toggle = document.getElementById("theme-toggle");
+      const icon = document.getElementById("theme-toggle-icon");
+      const root = document.documentElement;
+
+      function syncThemeIcon() {
+        if (icon) {
+          icon.classList.toggle("is-sun", root.classList.contains("dark"));
+        }
+      }
+
+      if (toggle) {
+        syncThemeIcon();
+        toggle.addEventListener("click", () => {
+          root.classList.toggle("dark");
+          localStorage.setItem("theme", root.classList.contains("dark") ? "dark" : "light");
+          syncThemeIcon();
+        });
+      }
+    })();
+  </script>
+
+  <!-- Terminal + Thesis Script -->
+  <script>
+    const fileContents = {
+
+"one_liner": `[EXECUTING THESIS DECRYPTION...]
+══════════════════════════════════════════════════════════
+  INVESTMENT THESIS: AI-NATIVE FUND MANAGEMENT
+══════════════════════════════════════════════════════════
+
+THE ONE-LINER:
+We are building an AI-powered fund management platform
+that gives both micro-investors and ultra-high-net-worth
+individuals access to professionally managed crypto and
+alternative-asset portfolios — at a fraction of the cost,
+minimum ticket size, and operational overhead of a
+traditional fund.
+
+──────────────────────────────────────────────────────────
+  📂 THESIS CONTENTS
+──────────────────────────────────────────────────────────
+  🔍 problem_statement.md    → The broken state of fund mgmt
+  💡 insight_and_timing.md   → Why this moment is structural
+  🏗️ solution_architecture   → Two-sided platform design
+  📊 market_and_model.json   → TAM/SAM/SOM + revenue model
+  🛡️ moat_and_gtm.yaml      → Competitive moat + go-to-market
+  ⚠️ risks_and_openqs.md     → Honest risk assessment
+  🤖 ai_company_ops.md       → AI-native auditing & operations
+  🏛️ family_office.yaml      → Generational family office
+──────────────────────────────────────────────────────────
+  SELECT A FILE ON THE LEFT TO DECRYPT FULL DETAILS.
+══════════════════════════════════════════════════════════`,
+
+"problem": `[DECRYPTING: problem_statement.md]
+══════════════════════════════════════════════════════════
+  § 2. THE PROBLEM
+══════════════════════════════════════════════════════════
+
+Fund management today is broken at BOTH ends of the
+wealth spectrum:
+
+─── MICRO & RETAIL INVESTORS ────────────────────────────
+Locked out of alternative investments (crypto strategies,
+private credit, structured products, pre-IPO, real assets)
+because minimum tickets, KYC complexity, and manual fund
+operations make it uneconomical for fund managers to
+serve them.
+
+They're left with exchanges and basic robo-advisors —
+execution tools, not portfolio management.
+
+─── HNI / UHNI INVESTORS ───────────────────────────────
+Over-served by relationship managers but under-served by
+technology. Portfolio construction, rebalancing, and risk
+monitoring across crypto + traditional alts is still
+spreadsheet-driven, fragmented across custodians/exchanges,
+and dependent on a human PM's bandwidth.
+
+Reporting is slow. Personalization is shallow. Fee
+structures don't reflect the actual marginal cost of
+managing a portfolio.
+
+─── FUND MANAGERS / GPs ────────────────────────────────
+Stuck running 1990s-style operations — manual NAV
+calculation, manual investor reporting, manual compliance
+checks — which caps the number of investors and strategies
+they can service profitably, especially at low ticket sizes.
+
+──────────────────────────────────────────────────────────
+  ROOT CAUSE: Fund management has not been re-architected
+  for an AI-and-crypto-native world. It's still built for
+  a world of quarterly statements and $1M minimums.
+══════════════════════════════════════════════════════════`,
+
+"insight": `[DECRYPTING: insight_and_timing.md]
+══════════════════════════════════════════════════════════
+  § 3. THE INSIGHT — WHY NOW
+══════════════════════════════════════════════════════════
+
+Two structural shifts make this the right moment:
+
+─── SHIFT 1: CRYPTO MARKET MATURITY ────────────────────
+Crypto market structure has matured enough — custody,
+on-chain data, liquid derivatives, tokenized real-world
+assets — that algorithmic and AI-driven portfolio
+strategies can be run with institutional-grade risk
+controls.
+
+But most existing players are exchanges or single-strategy
+funds, NOT full-service asset managers.
+
+─── SHIFT 2: AI COLLAPSES OPERATIONS COST ──────────────
+What used to require a team of analysts, a back office,
+and a compliance desk can now be done by an AI-augmented
+platform:
+  • Portfolio construction
+  • Rebalancing logic
+  • Risk monitoring
+  • Investor communication
+  • Reporting & compliance
+...at near-zero marginal cost per additional investor.
+
+══════════════════════════════════════════════════════════
+  KEY UNLOCK: For the first time, the SAME infrastructure
+  can profitably serve a $500 ticket and a $5M ticket —
+  just with different products, risk bands, and service
+  layers wrapped around a common AI/operations core.
+══════════════════════════════════════════════════════════
+
+─── WHY NOW (ADDITIONAL TAILWINDS) ─────────────────────
+• Regulatory clarity on crypto custody improving globally
+• AI model costs dropped enough for personalized mgmt
+• Retail crypto adoption is broad but unsophisticated
+• HNI/UHNI demand for crypto allocation is rising fast
+• RWA tokenization creates new asset class needing infra
+══════════════════════════════════════════════════════════`,
+
+"solution": `[DECRYPTING: solution_architecture.md]
+══════════════════════════════════════════════════════════
+  § 4. THE SOLUTION — TWO-SIDED PLATFORM
+══════════════════════════════════════════════════════════
+
+A two-sided platform on one shared AI + infra backbone:
+
+┌─────────────────────────────────────────────────────┐
+│  LAYER A: MICRO-INVESTMENT (Mass/Retail)            │
+├─────────────────────────────────────────────────────┤
+│  • Crypto & alt-asset baskets from $10–$500         │
+│  • AI-driven model portfolios (risk/theme/goal)     │
+│  • Automated rebalancing & tax-aware harvesting     │
+│  • Recurring investment & round-up features         │
+│  • Fully digital self-serve KYC/AML onboarding      │
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  LAYER B: HNI/UHNI WEALTH LAYER                    │
+├─────────────────────────────────────────────────────┤
+│  • AI co-pilot for portfolio construction           │
+│  • Bespoke strategy with human PM-in-the-loop       │
+│  • Scenario modeling + on-chain risk simulation      │
+│  • Multi-custody aggregation & unified reporting     │
+│  • Curated deal flow: pre-IPO, private credit,      │
+│    tokenized RE, structured crypto products          │
+│  • White-glove service on shared AI infra            │
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│  SHARED INFRASTRUCTURE (THE ACTUAL MOAT)            │
+├─────────────────────────────────────────────────────┤
+│  ◆ AI portfolio construction & risk engine          │
+│  ◆ Automated compliance + KYC/AML pipeline          │
+│  ◆ Custody/exchange integration layer               │
+│  ◆ On-chain analytics + AI signal generation        │
+└─────────────────────────────────────────────────────┘
+══════════════════════════════════════════════════════════`,
+
+"market": `[DECRYPTING: market_and_model.json]
+══════════════════════════════════════════════════════════
+  § 6–7. MARKET OPPORTUNITY & BUSINESS MODEL
+══════════════════════════════════════════════════════════
+
+{
+  "market_sizing": {
+    "TAM": "Global AUM in alternatives + crypto mgmt",
+    "SAM": "AI-native, digitally-distributed fund mgmt",
+    "SOM": "Initial geography/segment target",
+    "wedge": "Micro tier → distribution, data, brand.
+              HNI/UHNI tier → bulk of AUM and margin."
+  },
+
+  "revenue_model": [
+    {
+      "layer": "Micro-Investment",
+      "mechanism": "Mgmt fee (0.5-1.5% AUM) +
+                    small performance fee on baskets"
+    },
+    {
+      "layer": "HNI/UHNI",
+      "mechanism": "Mgmt fee (1-2% AUM, tiered) +
+                    performance fee (10-20% above hurdle)"
+    },
+    {
+      "layer": "Platform/Infra (Phase 3)",
+      "mechanism": "B2B2C licensing of AI portfolio +
+                    compliance engine to RIAs/managers"
+    }
+  ],
+
+  "blended_strategy": "High-volume low-margin micro tier
+    subsidizes customer acquisition and data. High-margin
+    HNI/UHNI tier drives profitability. Over time, the
+    platform layer becomes a third revenue line
+    (infrastructure-as-a-service to other managers)."
+}
+══════════════════════════════════════════════════════════`,
+
+"moat": `[DECRYPTING: moat_and_gtm.yaml]
+══════════════════════════════════════════════════════════
+  § 8–9. WHY WE WIN + GO-TO-MARKET
+══════════════════════════════════════════════════════════
+
+competitive_moat:
+  1_shared_infra_economics:
+    desc: "Most competitors build for one segment.
+           We amortize the AI/ops stack across both,
+           giving us a structural cost advantage."
+
+  2_data_flywheel:
+    desc: "Every managed portfolio (micro AND UHNI)
+           generates performance + behavioral data that
+           improves AI models → improves performance →
+           attracts more AUM. Compounding loop."
+
+  3_regulatory_complexity_as_barrier:
+    desc: "Once built, the compliance, custody, and
+           reporting pipeline is hard to replicate —
+           especially across both retail and accredited
+           investor regimes."
+
+  4_trust_compounding:
+    desc: "Credibility from managing UHNI money lends
+           authority to the retail product. Scale and data
+           from retail strengthens the AI engine serving
+           UHNI. Mutual reinforcement."
+
+go_to_market:
+  phase_1:
+    action: "Launch HNI/UHNI product first"
+    why: "Establish credibility, generate track record,
+          build AI/compliance core with fewer, higher-
+          value, higher-trust users."
+
+  phase_2:
+    action: "Open micro-investment product"
+    distribution: "Fintech partnerships, crypto-native
+                   communities, creator/influencer channels"
+    backbone: "Same shared infrastructure"
+
+  phase_3:
+    action: "License infrastructure layer"
+    to: "Smaller wealth managers and family offices
+         who want AI-native crypto/alt capabilities
+         without building in-house."
+══════════════════════════════════════════════════════════`,
+
+"risks": `[DECRYPTING: risks_and_openqs.md]
+══════════════════════════════════════════════════════════
+  § 11. RISKS & OPEN QUESTIONS
+══════════════════════════════════════════════════════════
+
+We believe in being upfront — YC and serious VCs
+respect transparency on risk:
+
+⚠️  REGULATORY
+Fund management + crypto custody triggers licensing
+requirements that vary sharply by jurisdiction. This
+shapes initial geography choice and timeline. We are
+planning a Cayman Islands SPC structure with CIMA
+registration as the initial regulatory path.
+
+⚠️  TWO-SIDED COMPLEXITY
+Serving micro and UHNI simultaneously risks split focus.
+We are explicit about sequencing: HNI/UHNI first to build
+track record and infrastructure, then micro tier expansion.
+The proof is that the same core infra genuinely serves both.
+
+⚠️  TRACK RECORD
+Asset/fund managers are trust businesses. A credible,
+public performance history — even from a smaller pilot
+fund — will matter more to investors than the AI
+narrative alone. We intend to establish this early.
+
+⚠️  DIFFERENTIATION
+Needs a sharp, specific answer: what exactly can this
+platform do that exists nowhere else today? The answer
+lies in the shared-infra economics and the data flywheel
+across two distinct investor segments.
+
+──────────────────────────────────────────────────────────
+  NOTES:
+  This is a living thesis. Before formal VC pitches it
+  needs: real TAM/SAM/SOM numbers, specific regulatory
+  path, founder-market fit narrative, and early traction
+  (waitlist, pilot AUM, LOIs from HNIs).
+
+  A thesis without proof points doesn't move YC.
+  We're building those proof points now.
+══════════════════════════════════════════════════════════`,
+
+"ai_ops": `[DECRYPTING: ai_company_ops.md]
+══════════════════════════════════════════════════════════
+  § AI-NATIVE AUDITING & COMPANY OPERATIONS
+══════════════════════════════════════════════════════════
+
+The thesis is not just about trading. It is about
+building an ENTIRE COMPANY that runs on AI from day
+one — not bolted on, but architected around it.
+
+─── AI-FIRST AUDITING ENGINE ───────────────────────────
+Traditional fund auditing is a quarterly, manual,
+expensive process. We replace it with:
+
+  ◆ Continuous Real-Time Auditing
+    Every transaction, NAV calculation, fee accrual,
+    and investor allocation is verified by AI models
+    in real-time — not reviewed by humans quarterly.
+
+  ◆ Anomaly Detection & Compliance Monitoring
+    ML models trained on regulatory patterns flag
+    suspicious activity, concentration risk breaches,
+    and compliance violations BEFORE they happen.
+
+  ◆ Automated Regulatory Reporting
+    CIMA filings, AML/KYC audit trails, investor
+    disclosures — generated automatically from the
+    same data layer that runs the fund.
+
+─── AI-MANAGED COMPANY OPERATIONS ─────────────────────
+Beyond auditing, AI handles the operational backbone:
+
+  ◆ Investor Relations Engine
+    AI-generated performance reports, risk summaries,
+    and portfolio analytics delivered to each investor
+    personalized to their holdings and risk profile.
+
+  ◆ Fund Administration Automation
+    NAV calculation, subscription/redemption processing,
+    capital calls, distribution waterfall computation
+    — all automated, all auditable, zero human error.
+
+  ◆ Treasury & Cash Management
+    Multi-venue liquidity routing, yield optimization
+    on idle capital, automated collateral management
+    across custodians and exchanges.
+
+  ◆ Internal Decision Intelligence
+    AI co-pilots for portfolio managers: scenario
+    modeling, risk simulation, strategy backtesting,
+    and market regime detection — augmenting human
+    judgment, not replacing it.
+
+══════════════════════════════════════════════════════════
+  VISION: A fund where every operational function that
+  doesn't require human judgment is handled by AI —
+  so the humans focus ONLY on alpha generation,
+  investor relationships, and strategic decisions.
+══════════════════════════════════════════════════════════`,
+
+"family_office": `[DECRYPTING: family_office.yaml]
+══════════════════════════════════════════════════════════
+  § GENERATIONAL FAMILY OFFICE STRUCTURE
+══════════════════════════════════════════════════════════
+
+family_office_configuration:
+  type: Single Family Office (SFO)
+  evolution_path: SFO → Multi-Family Office (MFO)
+  jurisdiction: Cayman Islands (holding) + India (ops)
+
+─── CORE OBJECTIVES ────────────────────────────────────
+  1. Multi-generational wealth preservation
+     Risk-isolated compounding across asset classes.
+     No single point of failure. No concentration risk.
+
+  2. Direct venture investments
+     Seed-stage allocations in:
+     • Next-gen crypto infrastructure protocols
+     • AI agent frameworks and tooling
+     • Modular developer platforms
+     • Tokenized real-world assets (RWA)
+
+  3. Systematic yield harvesting
+     Algorithmic on-chain treasury routing
+     that optimizes returns on idle capital
+     across DeFi, structured products, and
+     tokenized fixed-income instruments.
+
+─── GOVERNANCE ARCHITECTURE ────────────────────────────
+  custody:
+    primary: Multi-signature wallets (Gnosis Safe)
+    institutional: Fireblocks / Copper.co integration
+    policy: 3-of-5 multi-sig for treasury operations
+
+  monitoring:
+    method: Custom MCP (Model Context Protocol) servers
+    coverage: Real-time on-chain treasury health tracking
+    alerts: Anomaly detection on all fund flows
+
+  reporting:
+    frequency: Real-time dashboard + monthly summaries
+    recipients: Family principals + advisory board
+    format: AI-generated with human review layer
+
+─── WEALTH MANAGEMENT PHILOSOPHY ───────────────────────
+  reference_model: Bridgewater Associates
+  philosophy: "Radical transparency + systematic,
+               rule-based macro investment engines"
+
+  pure_alpha_strategy:
+    Uncorrelated alpha via AI multi-agent trading
+    models on live blockchain protocol layers.
+    Decentralized automated liquidity provisioning
+    and perpetual futures basis-capture.
+
+  all_weather_strategy:
+    Risk parity framework distributed across liquid
+    alt-crypto networks and tokenized physical assets.
+    Dynamic algorithmic rebalancing matching target
+    volatility index metrics.
+
+══════════════════════════════════════════════════════════
+  ENDGAME: A self-sustaining, AI-augmented family
+  office that compounds wealth across generations
+  while maintaining full transparency, institutional
+  risk controls, and regulatory compliance.
+══════════════════════════════════════════════════════════`
+    };
+
+    let activeTimeout = null;
+
+    function runCommand(key) {
+      if (activeTimeout) clearTimeout(activeTimeout);
+
+      // Update sidebar active state
+      document.querySelectorAll(".sidebar-btn").forEach(btn => {
+        btn.classList.remove("sidebar-btn-active");
+      });
+      const activeBtn = document.getElementById("btn-" + key);
+      if (activeBtn) activeBtn.classList.add("sidebar-btn-active");
+
+      const inputSpan = document.getElementById("terminal-input");
+      const outputDiv = document.getElementById("terminal-output");
+      const cursor = document.getElementById("terminal-cursor");
+
+      const commandMap = {
+        "one_liner": "./reveal_thesis.sh",
+        "problem": "cat problem_statement.md",
+        "insight": "cat insight_and_timing.md",
+        "solution": "cat solution_architecture.md",
+        "market": "cat market_and_model.json",
+        "moat": "cat moat_and_gtm.yaml",
+        "risks": "cat risks_and_openqs.md",
+        "ai_ops": "cat ai_company_ops.md",
+        "family_office": "cat family_office.yaml"
+      };
+
+      const commandString = commandMap[key] || `cat ${key}`;
+      inputSpan.textContent = "";
+      outputDiv.textContent = "";
+      cursor.style.display = "inline-block";
+
+      let i = 0;
+      function typeInput() {
+        if (i < commandString.length) {
+          inputSpan.textContent += commandString.charAt(i);
+          i++;
+          activeTimeout = setTimeout(typeInput, 20);
+        } else {
+          activeTimeout = setTimeout(() => {
+            cursor.style.display = "none";
+            const lines = fileContents[key].split("\n");
+            let lineIndex = 0;
+            function printLines() {
+              if (lineIndex < lines.length) {
+                outputDiv.textContent += lines[lineIndex] + "\n";
+                lineIndex++;
+                // Scroll to bottom as content prints
+                outputDiv.parentElement.scrollTop = outputDiv.parentElement.scrollHeight;
+                activeTimeout = setTimeout(printLines, 12);
+              }
+            }
+            printLines();
+          }, 120);
+        }
+      }
+      typeInput();
+    }
+
+    // Guestbook submit handler
+    function submitGuestbook(e) {
+      e.preventDefault();
+      const name = document.getElementById("gb-name").value;
+      const role = document.getElementById("gb-role").value;
+      const msg = document.getElementById("gb-message").value;
+
+      const subject = encodeURIComponent(`Lore Thesis Feedback from ${name}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nRole / Fund: ${role || "N/A"}\n\nFeedback:\n${msg}\n\n---\nSent from the Lore page guestbook`
+      );
+
+      window.location.href = `mailto:akaivalya2005@gmail.com?subject=${subject}&body=${body}`;
+
+      // Show success
+      document.getElementById("gb-success").classList.remove("hidden");
+      document.getElementById("guestbook-form").reset();
+
+      setTimeout(() => {
+        document.getElementById("gb-success").classList.add("hidden");
+      }, 5000);
+    }
+
+    // Auto-run on load
+    window.addEventListener("DOMContentLoaded", () => {
+      runCommand("one_liner");
+    });
+  </script>
+</body>
+</html>

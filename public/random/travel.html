@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="icon" href="/favicon.svg" />
+  <title>Kaivalya Adgulwar | Travel Globe</title>
+
+  <script>
+    (() => {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/index.css" />
+  
+  <style>
+    :root {
+      color-scheme: light;
+      --site-bg: #f6f4ee;
+      --site-text: #101114;
+      --site-muted: rgba(16, 17, 20, 0.68);
+      --site-border: rgba(0, 0, 0, 0.24);
+      --site-border-strong: rgba(0, 0, 0, 0.9);
+      --site-panel: #ffffff;
+      --site-panel-soft: #f1efe7;
+      --site-shadow: rgba(0, 0, 0, 0.12);
+      --site-shadow-strong: rgba(0, 0, 0, 0.5);
+      --site-link: #0f62fe;
+    }
+
+    html.dark {
+      color-scheme: dark;
+      --site-bg: #0d1016;
+      --site-text: #f5f7fb;
+      --site-muted: rgba(245, 247, 251, 0.72);
+      --site-border: rgba(255, 255, 255, 0.16);
+      --site-border-strong: rgba(255, 255, 255, 0.9);
+      --site-panel: #131823;
+      --site-panel-soft: #0f141d;
+      --site-shadow: rgba(0, 0, 0, 0.38);
+      --site-shadow-strong: rgba(255, 255, 255, 0.3);
+      --site-link: #8bb7ff;
+    }
+
+    body {
+      background: var(--site-bg);
+      color: var(--site-text);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .theme-toggle {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      color: var(--site-text);
+      box-shadow: 3px 3px 0 var(--site-shadow-strong);
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover {
+      background: var(--site-text);
+      color: var(--site-panel);
+    }
+
+    .theme-toggle-glyph {
+      width: 1.15rem;
+      height: 1.15rem;
+      display: block;
+      background-color: currentColor;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      -webkit-mask-size: contain;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M20 14.5A8.5 8.5 0 1 1 9.5 4 6.8 6.8 0 0 0 20 14.5Z'/%3E%3C/svg%3E");
+    }
+
+    .theme-toggle-glyph.is-sun {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='black'%3E%3Ccircle cx='12' cy='12' r='4.2'/%3E%3Crect x='11.3' y='1.8' width='1.4' height='4.1' rx='0.7'/%3E%3Crect x='11.3' y='18.1' width='1.4' height='4.1' rx='0.7'/%3E%3Crect x='18.1' y='11.3' width='4.1' height='1.4' rx='0.7'/%3E%3Crect x='1.8' y='11.3' width='4.1' height='1.4' rx='0.7'/%3E%3Crect x='16.85' y='4.25' width='1.4' height='4' rx='0.7' transform='rotate(45 17.55 6.25)'/%3E%3Crect x='5.75' y='15.35' width='1.4' height='4' rx='0.7' transform='rotate(45 6.45 17.35)'/%3E%3Crect x='15.35' y='16.85' width='4' height='1.4' rx='0.7' transform='rotate(45 17.35 17.55)'/%3E%3Crect x='4.25' y='5.75' width='4' height='1.4' rx='0.7' transform='rotate(45 6.25 6.45)'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    fieldset {
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      box-shadow: 4px 4px 0 var(--site-shadow);
+    }
+
+    .travel-shell {
+      overflow: hidden;
+      background: var(--site-panel);
+      border: 1px solid var(--site-border);
+      box-shadow: 6px 6px 0 var(--site-shadow);
+    }
+
+    .travel-stage {
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          color-mix(in srgb, var(--site-text) 7%, transparent) 0,
+          color-mix(in srgb, var(--site-text) 7%, transparent) 1px,
+          transparent 1px,
+          transparent 18px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--site-text) 7%, transparent) 0,
+          color-mix(in srgb, var(--site-text) 7%, transparent) 1px,
+          transparent 1px,
+          transparent 18px
+        ),
+        var(--site-panel);
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .travel-stage:active {
+      cursor: grabbing;
+    }
+
+    .globe-canvas {
+      width: min(72vw, 560px);
+      max-width: 100%;
+      aspect-ratio: 1;
+      filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.12));
+    }
+
+    .travel-hud {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      padding: 0.55rem 0.7rem;
+      background: color-mix(in srgb, var(--site-panel) 94%, transparent);
+      border: 1px solid var(--site-border);
+      box-shadow: 4px 4px 0 var(--site-shadow);
+    }
+
+    .travel-legend {
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      padding: 0.7rem 0.8rem;
+      background: color-mix(in srgb, var(--site-panel) 94%, transparent);
+      border: 1px solid var(--site-border);
+      box-shadow: 4px 4px 0 var(--site-shadow);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
+    }
+
+    .travel-tooltip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      transform: translate(-50%, calc(-100% - 14px));
+      padding: 0.4rem 0.55rem;
+      background: color-mix(in srgb, var(--site-panel) 96%, transparent);
+      border: 1px solid var(--site-border);
+      box-shadow: 3px 3px 0 var(--site-shadow);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      line-height: 1.2;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 120ms ease;
+    }
+
+    .travel-tooltip.is-visible {
+      opacity: 1;
+    }
+
+    .travel-legend-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .travel-marker-card {
+      position: absolute;
+      right: 1rem;
+      bottom: 1rem;
+      width: min(280px, calc(100% - 2rem));
+      display: none;
+      flex-direction: column;
+      gap: 0.55rem;
+      padding: 0.8rem;
+      background: color-mix(in srgb, var(--site-panel) 96%, transparent);
+      border: 1px solid var(--site-border);
+      box-shadow: 4px 4px 0 var(--site-shadow);
+    }
+
+    .travel-marker-card.is-open {
+      display: flex;
+    }
+
+    .travel-marker-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: start;
+    }
+
+    .travel-marker-card-head p,
+    .travel-marker-card-copy p {
+      margin: 0;
+    }
+
+    .travel-marker-card-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--site-muted);
+    }
+
+    .travel-marker-card-title {
+      margin-top: 0.2rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .travel-marker-card-close {
+      width: 1.85rem;
+      height: 1.85rem;
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      box-shadow: 2px 2px 0 var(--site-shadow);
+      font-size: 0.92rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .travel-marker-card-close:hover {
+      background: var(--site-text);
+      color: var(--site-panel);
+    }
+
+    .travel-marker-card-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      color: var(--site-muted);
+    }
+
+    .legend-check {
+      width: 14px;
+      height: 14px;
+      background: #1ca34b;
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .legend-pin {
+      position: relative;
+      width: 12px;
+      height: 12px;
+      background: #d7263d;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .legend-pin::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 2px;
+      height: 10px;
+      margin-left: -1px;
+      background: #7c1320;
+    }
+  </style>
+</head>
+<body>
+  <main
+    class="flex min-h-screen flex-col max-w-5xl mx-auto px-4 py-4 sm:py-8 leading-5 dark:bg-black dark:text-white font-sans"
+  >
+    <div class="flex justify-between flex-wrap mb-4 items-center">
+      <a href="/">
+        <h1 class="font-mono text-2xl font-bold">Kaivalya Adgulwar</h1>
+      </a>
+      <div
+        class="flex flex-row justify-between gap-3 align-middle items-center my-1"
+      >
+        <a class="flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white text-normal px-4 h-6 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] w-32 bg-[#0077b5] text-white" href="https://www.linkedin.com/in/kaivalya-adgulwar-293872292" target="_blank">
+          <div style="mask-image: url('/assets/linkedin.svg');" class="icon"></div>
+          <span class="ms-1">LinkedIn</span>
+        </a>
+        <a class="flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white text-normal px-4 h-6 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] w-32" href="https://github.com/aKaivalya" target="_blank">
+          <div style="mask-image: url('/assets/github.svg');" class="icon"></div>
+          <span class="ms-1">GitHub</span>
+        </a>
+        <button aria-label="Toggle dark mode" class="theme-toggle" id="theme-toggle" title="Toggle dark mode" type="button">
+          <span class="theme-toggle-glyph" id="theme-toggle-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <fieldset class="p-4 pt-2">
+        <legend class="ms-4 md:ms-0">
+          <h6 class="text-lg mx-2 font-mono italic">cat ~/random/travel.md</h6>
+        </legend>
+        <div class="travel-shell">
+          <div class="travel-stage" id="travel-globe-wrap">
+            <canvas class="globe-canvas" height="420" id="travel-globe" width="420"></canvas>
+            <div class="travel-tooltip" id="travel-tooltip"></div>
+            <div class="travel-hud">
+              <div>travel.exe</div>
+              <div>drag to rotate</div>
+              <div>wheel to zoom</div>
+            </div>
+            <div class="travel-legend">
+              <div class="travel-legend-row">
+                <span class="legend-check">v</span>
+                <span>visited</span>
+              </div>
+              <div class="travel-legend-row">
+                <span class="legend-pin"></span>
+                <span>wishlist</span>
+              </div>
+            </div>
+          </div>
+          <div aria-live="polite" class="travel-marker-card" id="travel-marker-card">
+            <div class="travel-marker-card-head">
+              <div>
+                <p class="travel-marker-card-label" id="travel-marker-kind">visited</p>
+                <p class="travel-marker-card-title" id="travel-marker-title">Nashik</p>
+              </div>
+              <button class="travel-marker-card-close" id="travel-marker-close" type="button">x</button>
+            </div>
+            <div class="travel-marker-card-copy mt-2">
+              <p id="travel-marker-caption">Home of Sandip University and my current engineering student base.</p>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+
+  <script>
+    (() => {
+      const toggle = document.getElementById("theme-toggle");
+      const icon = document.getElementById("theme-toggle-icon");
+      const root = document.documentElement;
+
+      function syncThemeIcon() {
+        if (icon) {
+          icon.classList.toggle("is-sun", root.classList.contains("dark"));
+        }
+      }
+
+      if (toggle) {
+        syncThemeIcon();
+        toggle.addEventListener("click", () => {
+          root.classList.toggle("dark");
+          localStorage.setItem("theme", root.classList.contains("dark") ? "dark" : "light");
+          syncThemeIcon();
+        });
+      }
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("travel-globe");
+      const tooltip = document.getElementById("travel-tooltip");
+      const markerCard = document.getElementById("travel-marker-card");
+      const markerCardKind = document.getElementById("travel-marker-kind");
+      const markerCardTitle = document.getElementById("travel-marker-title");
+      const markerCardCaption = document.getElementById("travel-marker-caption");
+      const markerCardClose = document.getElementById("travel-marker-close");
+      const ctx = canvas.getContext("2d");
+
+      const markerDetails = {
+        "Nashik": { caption: "Home of Sandip University and my current B.Tech engineering student base." },
+        "Pune": { caption: "Where I worked at InfoSpeedinc as a Software Developer Intern." },
+        "Yavatmal": { caption: "Where I completed my HSC and school education." },
+        "San Francisco": { caption: "Hoping to visit Silicon Valley to work on cutting edge tech." },
+        "New York City": { caption: "A vibrant place on my travel wishlist." },
+        "Tokyo": { caption: "Top wishlist destination for its technology, arcade culture, and food." },
+        "London": { caption: "Classic European tech and finance hub I plan to explore." }
+      };
+
+      const visited = [
+        { name: "Nashik", coords: [73.7898, 19.9975], kind: "visited" },
+        { name: "Pune", coords: [73.8567, 18.5204], kind: "visited" },
+        { name: "Yavatmal", coords: [78.1278, 20.3888], kind: "visited" }
+      ];
+
+      const wishlist = [
+        { name: "San Francisco", coords: [-122.4194, 37.7749], kind: "wishlist" },
+        { name: "New York City", coords: [-74.0060, 40.7128], kind: "wishlist" },
+        { name: "Tokyo", coords: [139.6917, 35.6895], kind: "wishlist" },
+        { name: "London", coords: [-0.1278, 51.5074], kind: "wishlist" }
+      ];
+
+      const projection = d3
+        .geoOrthographic()
+        .translate([canvas.width / 2, canvas.height / 2])
+        .scale(canvas.width * 0.41)
+        .clipAngle(90)
+        .precision(0.3)
+        .rotate([-75, -20]);
+
+      const path = d3.geoPath(projection, ctx);
+      const graticule = d3.geoGraticule10();
+      const sphere = { type: "Sphere" };
+      const markers = [...wishlist, ...visited];
+      const pointerMap = new Map();
+      const minScale = canvas.width * 0.28;
+      const maxScale = canvas.width * 0.68;
+
+      let countries = null;
+      let isDragging = false;
+      let dragStart = null;
+      let rotationStart = projection.rotate().slice();
+      let autoSpin = true;
+      let autoSpinTimer = null;
+      let hoveredMarker = null;
+      let hoveredPoint = null;
+      let selectedMarker = null;
+
+      function openMarkerCard(marker) {
+        const details = markerDetails[marker.name];
+        markerCardKind.textContent = marker.kind === "visited" ? "visited" : "wishlist";
+        markerCardTitle.textContent = marker.name;
+        markerCardCaption.textContent = details ? details.caption : "Pinned city on map.";
+        markerCard.classList.add("is-open");
+        selectedMarker = marker;
+      }
+
+      function closeMarkerCard() {
+        markerCard.classList.remove("is-open");
+        selectedMarker = null;
+      }
+
+      function setTooltip(marker, point) {
+        if (!marker || !point) {
+          tooltip.classList.remove("is-visible");
+          hoveredMarker = null;
+          hoveredPoint = null;
+          return;
+        }
+
+        hoveredMarker = marker;
+        hoveredPoint = point;
+        tooltip.textContent = marker.name;
+        tooltip.style.left = `${point[0]}px`;
+        tooltip.style.top = `${point[1]}px`;
+        tooltip.classList.add("is-visible");
+      }
+
+      function clampScale(nextScale) {
+        return Math.max(minScale, Math.min(maxScale, nextScale));
+      }
+
+      function scheduleAutoSpin() {
+        if (autoSpinTimer) clearTimeout(autoSpinTimer);
+        autoSpinTimer = setTimeout(() => {
+          if (!isDragging && pointerMap.size === 0) {
+            autoSpin = true;
+          }
+        }, 5000);
+      }
+
+      function markInteraction() {
+        autoSpin = false;
+        scheduleAutoSpin();
+      }
+
+      function zoomBy(factor) {
+        projection.scale(clampScale(projection.scale() * factor));
+        draw();
+      }
+
+      function getVisiblePoint(marker) {
+        const point = projection(marker.coords);
+        if (!point) return null;
+        const center = projection.invert(point);
+        if (!center) return null;
+        const visible = d3.geoDistance(center, marker.coords) < Math.PI / 2;
+        return visible ? point : null;
+      }
+
+      function findMarkerAtPoint(x, y) {
+        for (const marker of markers) {
+          const point = getVisiblePoint(marker);
+          if (!point) continue;
+          const hitRadius = 12;
+          if (Math.hypot(point[0] - x, point[1] - y) <= hitRadius) {
+            return { marker, point };
+          }
+        }
+        return null;
+      }
+
+      function drawPixelCheck(x, y, alpha = 1) {
+        ctx.save();
+        ctx.translate(Math.round(x), Math.round(y));
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = "#1ca34b";
+        ctx.fillRect(-7, -7, 14, 14);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(-4, 0, 2, 2);
+        ctx.fillRect(-2, 2, 2, 2);
+        ctx.fillRect(0, 0, 2, 2);
+        ctx.fillRect(2, -2, 2, 2);
+        ctx.fillRect(4, -4, 2, 2);
+        ctx.restore();
+      }
+
+      function drawPushPin(x, y, alpha = 1) {
+        ctx.save();
+        ctx.translate(Math.round(x), Math.round(y));
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = "#d7263d";
+        ctx.beginPath();
+        ctx.arc(0, -4, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#7c1320";
+        ctx.fillRect(-1, 2, 2, 10);
+        ctx.restore();
+      }
+
+      function drawMarker(marker) {
+        const point = projection(marker.coords);
+        if (!point) return;
+        const center = projection.invert(point);
+        if (!center) return;
+        const visible = d3.geoDistance(center, marker.coords) < Math.PI / 2;
+        const alpha = visible ? 1 : 0.22;
+
+        if (marker.kind === "visited") {
+          drawPixelCheck(point[0], point[1], alpha);
+        } else {
+          drawPushPin(point[0], point[1] - 2, alpha);
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.save();
+        path(sphere);
+        ctx.clip();
+
+        ctx.fillStyle = document.documentElement.classList.contains("dark") ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.025)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (countries) {
+          ctx.beginPath();
+          path(countries);
+          ctx.fillStyle = document.documentElement.classList.contains("dark") ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.05)";
+          ctx.fill();
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = document.documentElement.classList.contains("dark") ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.16)";
+          ctx.stroke();
+        }
+
+        ctx.beginPath();
+        path(graticule);
+        ctx.lineWidth = 0.55;
+        ctx.strokeStyle = document.documentElement.classList.contains("dark") ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.12)";
+        ctx.stroke();
+
+        markers.forEach(drawMarker);
+        ctx.restore();
+
+        ctx.beginPath();
+        path(sphere);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = document.documentElement.classList.contains("dark") ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.3)";
+        ctx.stroke();
+
+        if (hoveredMarker) {
+          const point = getVisiblePoint(hoveredMarker);
+          if (point) setTooltip(hoveredMarker, point);
+          else setTooltip(null, null);
+        }
+
+        if (selectedMarker) {
+          const point = projection(selectedMarker.coords);
+          if (!point) closeMarkerCard();
+        }
+      }
+
+      function animate() {
+        if (autoSpin && !isDragging) {
+          const [lambda, phi, gamma] = projection.rotate();
+          projection.rotate([lambda - 0.07, phi, gamma]);
+        }
+        draw();
+        requestAnimationFrame(animate);
+      }
+
+      canvas.addEventListener("pointerdown", (event) => {
+        pointerMap.set(event.pointerId, { x: event.offsetX, y: event.offsetY });
+        isDragging = true;
+        markInteraction();
+        dragStart = [event.clientX, event.clientY];
+        rotationStart = projection.rotate().slice();
+        canvas.setPointerCapture(event.pointerId);
+      });
+
+      canvas.addEventListener("pointermove", (event) => {
+        pointerMap.set(event.pointerId, { x: event.offsetX, y: event.offsetY });
+        if (isDragging && dragStart) {
+          markInteraction();
+          const dx = event.clientX - dragStart[0];
+          const dy = event.clientY - dragStart[1];
+          projection.rotate([
+            rotationStart[0] + dx * 0.35,
+            Math.max(-65, Math.min(65, rotationStart[1] - dy * 0.35)),
+            rotationStart[2]
+          ]);
+          draw();
+          return;
+        }
+
+        const hit = findMarkerAtPoint(event.offsetX, event.offsetY);
+        if (hit) setTooltip(hit.marker, hit.point);
+        else setTooltip(null, null);
+      });
+
+      function stopDragging(event) {
+        pointerMap.delete(event.pointerId);
+        isDragging = false;
+        dragStart = null;
+        scheduleAutoSpin();
+      }
+
+      canvas.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        markInteraction();
+        zoomBy(event.deltaY > 0 ? 0.94 : 1.06);
+      });
+
+      canvas.addEventListener("pointerup", stopDragging);
+      canvas.addEventListener("pointercancel", stopDragging);
+      canvas.addEventListener("pointerleave", (event) => {
+        if (!isDragging) setTooltip(null, null);
+        stopDragging(event);
+      });
+
+      canvas.addEventListener("click", (event) => {
+        const hit = findMarkerAtPoint(event.offsetX, event.offsetY);
+        if (hit) openMarkerCard(hit.marker);
+        else closeMarkerCard();
+      });
+
+      markerCardClose.addEventListener("click", () => {
+        closeMarkerCard();
+      });
+
+      fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+        .then((response) => response.json())
+        .then((world) => {
+          countries = topojson.feature(world, world.objects.countries);
+          draw();
+        })
+        .catch(() => {
+          draw();
+        });
+
+      animate();
+    })();
+  </script>
+</body>
+</html>

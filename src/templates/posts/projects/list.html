@@ -1,0 +1,73 @@
+<div class="flex flex-col gap-4">
+  {% for post in posts %}
+    <div
+      class="flex flex-row gap-4 border border-black/20 dark:border-white/20 p-4 bg-var(--site-panel) shadow-[4px_4px_0_var(--site-shadow)] relative items-start"
+    >
+      <!-- Image Frame -->
+      <div class="w-16 h-16 sm:w-20 sm:h-20 border border-black/20 dark:border-white/20 bg-[var(--site-panel-soft)] shrink-0 flex items-center justify-center font-mono text-[10px] text-black/40 dark:text-white/40">
+        {% if post.coverImage %}
+          <img src="{{ post.coverImage }}" alt="{{ post.title }}" class="w-full h-full object-cover" />
+        {% else %}
+          <span>[image]</span>
+        {% endif %}
+      </div>
+
+      <!-- Content -->
+      <div class="flex-1 flex flex-col justify-between min-w-0 w-full">
+        <div>
+          <!-- Title & Star -->
+          <div class="flex justify-between items-center mb-1">
+            <a href="{{ post.href }}" class="hover:underline">
+              <h4 class="font-bold text-lg m-0 text-black dark:text-white">
+                {{ post.title }}
+              </h4>
+            </a>
+            {% if post.starred %}
+              <div
+                class="w-6 h-6 rounded-full border border-black/10 dark:border-white/10 bg-yellow-500/10 flex items-center justify-center text-xs"
+                title="Featured Project"
+              >
+                ⭐
+              </div>
+            {% endif %}
+          </div>
+          <!-- Description -->
+          <p class="text-sm opacity-80 m-0 leading-relaxed mb-3">
+            {{ post.summary }}
+          </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-3 mt-auto">
+          {% if post.github %}
+            <a
+              href="{{ post.github }}"
+              target="_blank"
+              class="flex items-center justify-center px-4 h-7 outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white font-mono text-xs shadow-[2px_2px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_1px_rgba(255,255,255,0.6)] bg-white dark:bg-slate-900 transition-all active:translate-x-[1px] active:translate-y-[1px]"
+            >
+              GitHub
+            </a>
+          {% endif %}
+          {% if post.devpost %}
+            <a
+              href="{{ post.devpost }}"
+              target="_blank"
+              class="flex items-center justify-center px-4 h-7 outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white font-mono text-xs shadow-[2px_2px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_1px_rgba(255,255,255,0.6)] bg-white dark:bg-slate-900 transition-all active:translate-x-[1px] active:translate-y-[1px]"
+            >
+              Devpost
+            </a>
+          {% endif %}
+          {% if post.video %}
+            <a
+              href="{{ post.video }}"
+              target="_blank"
+              class="flex items-center justify-center px-4 h-7 outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white font-mono text-xs shadow-[2px_2px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[2px_2px_0px_1px_rgba(255,255,255,0.6)] bg-white dark:bg-slate-900 transition-all active:translate-x-[1px] active:translate-y-[1px]"
+            >
+              Video
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

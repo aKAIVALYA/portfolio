@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+{% from "components/fieldset.html" import fieldset %}
+
+{% block content %}
+  <div class="flex flex-col gap-4">
+    <!-- whoami / README.md -->
+    {% call fieldset("whoami", class="!bg-transparent") %}
+      <div class="flex flex-row gap-4 text-lg items-start justify-between flex-wrap md:flex-nowrap">
+        <article class="text-black dark:text-white text-lg prose-p:m-0 flex flex-col gap-4 flex-1 min-w-[280px]">
+          <p>
+            Hii!! I'm <strong>Kaivalya Adgulwar</strong>, a B.Tech Computer Science & Engineering student at Sandip University and a backend-focused Software Developer.
+          </p>
+          <p>
+            Most of my time goes into software development, microservices, building AI agents, and automating blockchain trades. I specialize in designing clean microservices architectures, setting up robust CI/CD pipelines, and writing automated trading algorithms.
+          </p>
+          <p>
+            When I'm not programming, I focus on quantitative research, on-chain tokenomics analytics, and mentorship.
+          </p>
+          <p>
+            Feel free to connect with me on LinkedIn or GitHub!
+          </p>
+        </article>
+        
+        <!-- Profile photo card - Aligned to the right side -->
+        <div class="profile-photo-wrap w-36 h-36 sm:w-52 sm:h-52 shrink-0 border border-black/30 dark:border-white/25 shadow-[4px_4px_0_var(--site-shadow-strong)] relative overflow-hidden bg-gradient-to-tr from-gray-800 to-black flex flex-col justify-center items-center text-center self-end md:self-start ms-auto">
+          <img src="/assets/kaivalya.jpg" alt="Kaivalya Adgulwar" class="object-cover w-full h-full absolute inset-0" />
+        </div>
+      </div>
+    {% endcall %}
+
+    <!-- random.md / interactive extras -->
+    {% call fieldset("cat ~/random.md", class="!bg-transparent") %}
+      <div class="flex flex-col gap-3">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 font-mono">
+          <a class="flex flex-row items-center justify-between border border-black/30 dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black p-3 shadow-[3px_3px_0_var(--site-shadow-strong)] text-base font-bold bg-var(--site-panel-soft)" href="/random/travel">
+            <span>🗺️ Travel</span>
+          </a>
+          <a class="flex flex-row items-center justify-between border border-black/30 dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black p-3 shadow-[3px_3px_0_var(--site-shadow-strong)] text-base font-bold bg-var(--site-panel-soft)" href="/random/music">
+            <span>🎵 Music</span>
+          </a>
+
+          <a class="flex flex-row items-center justify-between border border-black/30 dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black p-3 shadow-[3px_3px_0_var(--site-shadow-strong)] text-base font-bold bg-var(--site-panel-soft)" href="/random/lore">
+            <span>📖 Lore</span>
+          </a>
+          <a class="flex flex-row items-center justify-between border border-black/30 dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black p-3 shadow-[3px_3px_0_var(--site-shadow-strong)] text-base font-bold bg-var(--site-panel-soft)" href="/random/toolbox">
+            <span>🛠️ Toolbox</span>
+          </a>
+        </div>
+      </div>
+    {% endcall %}
+
+    <!-- experience.md -->
+    {% call fieldset("cat ~/experience.md") %}
+      <div class="text-sm font-sans flex flex-col gap-4">
+        <p class="m-0 opacity-70 font-mono">the more professional-looking part of this</p>
+        
+        <!-- InfoSpeed Card -->
+        <div class="flex flex-row gap-4 border border-black/10 dark:border-white/10 p-4 bg-[var(--site-panel)] shadow-[3px_3px_0_var(--site-shadow)] relative items-start">
+          <div class="w-14 h-14 border border-black/10 dark:border-white/10 flex items-center justify-center bg-[var(--site-panel-soft)] shrink-0 overflow-hidden">
+            <img src="/assets/infospeed.png" alt="InfoSpeed Services Logo" class="w-full h-full object-cover" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-start flex-wrap gap-1">
+              <div>
+                <h4 class="font-bold text-lg m-0 text-black dark:text-white">InfoSpeed Services</h4>
+                <p class="text-sm font-semibold text-black/80 dark:text-white/80 m-0">Software Developer Intern</p>
+                <p class="text-xs opacity-60 m-0">Pune, Maharashtra, India</p>
+              </div>
+              <p class="text-sm font-mono opacity-80 m-0">01/2026 - 04/2026</p>
+            </div>
+            <ul class="list-disc list-outside ms-4 text-xs opacity-80 mt-2 font-mono leading-relaxed flex flex-col gap-1">
+              <li>Reduced manual shortlisting effort by 60% by analyzing the end-to-end hiring workflow, identifying key bottlenecks, and building a structured data pipeline.</li>
+              <li>Improved query performance across 500+ candidate records by redesigning the ranking logic with optimized schemas and indexing strategies.</li>
+              <li>Strengthened candidate comparison accuracy by developing modular APIs that extracted and parsed resume data in a consistent, structured format.</li>
+            </ul>
+          </div>
+          <!-- Star Badge -->
+          <div class="w-6 h-6 rounded-full border border-black/10 dark:border-white/10 bg-yellow-500/10 flex items-center justify-center text-xs ms-2 shrink-0 self-center">
+            ⭐
+          </div>
+        </div>
+      </div>
+    {% endcall %}
+
+    <!-- projects -->
+    {% call fieldset("ls ~/projects.md") %}
+      <div class="flex flex-col gap-2">
+        <p class="text-sm opacity-70 mb-2 font-mono">a few things i want people to actually click on</p>
+        {{ lists["projects"]|safe }}
+      </div>
+    {% endcall %}
+
+
+
+    <!-- certifications.md -->
+    {% call fieldset("cat ~/certifications.md", class="!bg-transparent") %}
+      <div class="font-sans text-sm">
+        <h4 class="font-bold font-mono text-base border-b border-black/20 dark:border-white/20 pb-1 mb-2">📜 Certifications & Simulations</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs mt-3">
+          <div class="border border-dashed border-black/30 dark:border-white/30 p-3 bg-[var(--site-panel-soft)]">
+            <div class="text-sm font-bold text-black dark:text-white mb-1">Sheryians Coding School</div>
+            <p class="m-0 text-xs opacity-80 leading-normal">Job Ready Cohort</p>
+            <span class="inline-block mt-2 text-[10px] text-[#0f62fe] dark:text-[#8bb7ff] border border-[#0f62fe]/30 dark:border-[#8bb7ff]/30 px-1">Completed</span>
+          </div>
+          <div class="border border-dashed border-black/30 dark:border-white/30 p-3 bg-[var(--site-panel-soft)]">
+            <div class="text-sm font-bold text-black dark:text-white mb-1">J.P. Morgan Chase</div>
+            <p class="m-0 text-xs opacity-80 leading-normal">Quantitative Research Simulation (Forage)</p>
+            <span class="inline-block mt-2 text-[10px] text-[#0f62fe] dark:text-[#8bb7ff] border border-[#0f62fe]/30 dark:border-[#8bb7ff]/30 px-1">Completed</span>
+          </div>
+          <div class="border border-dashed border-black/30 dark:border-white/30 p-3 bg-[var(--site-panel-soft)]">
+            <div class="text-sm font-bold text-black dark:text-white mb-1">Buildspace</div>
+            <p class="m-0 text-xs opacity-80 leading-normal">Nights & Weekends Season 5</p>
+            <span class="inline-block mt-2 text-[10px] text-[#0f62fe] dark:text-[#8bb7ff] border border-[#0f62fe]/30 dark:border-[#8bb7ff]/30 px-1">Completed</span>
+          </div>
+        </div>
+      </div>
+    {% endcall %}
+
+    <!-- links.md - Placed at the very end of the page -->
+    {% call fieldset("cat ~/links.md", class="!bg-transparent") %}
+      <div class="flex flex-col gap-3" style="font-family: 'Outfit', sans-serif;">
+        <p class="font-bold text-2xl mb-1 text-black dark:text-white">links!</p>
+        <ul class="flex flex-col gap-2.5 list-none ms-0 ps-0">
+          <li><a href="mailto:kaivalyaadgulwar@gmail.com" class="text-black dark:text-white text-lg font-semibold no-underline hover:underline">📧 Email</a></li>
+          <li><a href="https://github.com/aKaivalya" target="_blank" class="text-black dark:text-white text-lg font-semibold no-underline hover:underline">🐙 GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/kaivalya-adgulwar-293872292" target="_blank" class="text-black dark:text-white text-lg font-semibold no-underline hover:underline">💼 LinkedIn</a></li>
+          <li><a href="https://devpost.com/aKaivalya" target="_blank" class="text-black dark:text-white text-lg font-semibold no-underline hover:underline">🚀 Devpost</a></li>
+          <li><a href="https://x.com/aKaivalya" target="_blank" class="text-black dark:text-white text-lg font-semibold no-underline hover:underline">𝕏 X</a></li>
+          <li><a href="https://www.roblox.com/" target="_blank" class="text-black dark:text-white text-lg font-semibold no-underline hover:underline">🎮 Roblox</a></li>
+        </ul>
+      </div>
+    {% endcall %}
+  </div>
+{% endblock %}
