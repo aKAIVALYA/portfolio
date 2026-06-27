@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="icon" href="/favicon.svg" />
+  <title>Kaivalya Adgulwar | Admin Recommendations</title>
+
+  <script>
+    (() => {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/index.css" />
+  
+  <style>
+    :root {
+      color-scheme: light;
+      --site-bg: #f6f4ee;
+      --site-text: #101114;
+      --site-muted: rgba(16, 17, 20, 0.68);
+      --site-border: rgba(0, 0, 0, 0.24);
+      --site-border-strong: rgba(0, 0, 0, 0.9);
+      --site-panel: #ffffff;
+      --site-panel-soft: #f1efe7;
+      --site-shadow: rgba(0, 0, 0, 0.12);
+      --site-shadow-strong: rgba(0, 0, 0, 0.5);
+      --site-link: #0f62fe;
+    }
+
+    html.dark {
+      color-scheme: dark;
+      --site-bg: #0d1016;
+      --site-text: #f5f7fb;
+      --site-muted: rgba(245, 247, 251, 0.72);
+      --site-border: rgba(255, 255, 255, 0.16);
+      --site-border-strong: rgba(255, 255, 255, 0.9);
+      --site-panel: #131823;
+      --site-panel-soft: #0f141d;
+      --site-shadow: rgba(0, 0, 0, 0.38);
+      --site-shadow-strong: rgba(255, 255, 255, 0.3);
+      --site-link: #8bb7ff;
+    }
+
+    body {
+      background: var(--site-bg);
+      color: var(--site-text);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .theme-toggle {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      color: var(--site-text);
+      box-shadow: 3px 3px 0 var(--site-shadow-strong);
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover {
+      background: var(--site-text);
+      color: var(--site-panel);
+    }
+
+    .theme-toggle-glyph {
+      width: 1.15rem;
+      height: 1.15rem;
+      display: block;
+      background-color: currentColor;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      -webkit-mask-size: contain;
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M20 14.5A8.5 8.5 0 1 1 9.5 4 6.8 6.8 0 0 0 20 14.5Z'/%3E%3C/svg%3E");
+    }
+
+    .theme-toggle-glyph.is-sun {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='black'%3E%3Ccircle cx='12' cy='12' r='4.2'/%3E%3Crect x='11.3' y='1.8' width='1.4' height='4.1' rx='0.7'/%3E%3Crect x='11.3' y='18.1' width='1.4' height='4.1' rx='0.7'/%3E%3Crect x='18.1' y='11.3' width='4.1' height='1.4' rx='0.7'/%3E%3Crect x='1.8' y='11.3' width='4.1' height='1.4' rx='0.7'/%3E%3Crect x='16.85' y='4.25' width='1.4' height='4' rx='0.7' transform='rotate(45 17.55 6.25)'/%3E%3Crect x='5.75' y='15.35' width='1.4' height='4' rx='0.7' transform='rotate(45 6.45 17.35)'/%3E%3Crect x='15.35' y='16.85' width='4' height='1.4' rx='0.7' transform='rotate(45 17.35 17.55)'/%3E%3Crect x='4.25' y='5.75' width='4' height='1.4' rx='0.7' transform='rotate(45 6.25 6.45)'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    fieldset {
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      box-shadow: 4px 4px 0 var(--site-shadow);
+    }
+    
+    .admin-card {
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      box-shadow: 4px 4px 0 var(--site-shadow-strong);
+    }
+
+    .btn-action {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--site-border-strong);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--site-shadow-strong);
+      font-weight: bold;
+    }
+    .btn-action:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--site-shadow-strong);
+    }
+    .btn-action:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--site-shadow-strong);
+    }
+    .btn-accept {
+      background: #198754;
+      color: white;
+    }
+    .btn-decline, .btn-delete {
+      background: #dc3545;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <main class="flex min-h-screen flex-col max-w-5xl mx-auto px-4 py-4 sm:py-8 leading-5 dark:bg-black dark:text-white font-sans">
+    <div class="flex justify-between flex-wrap mb-4 items-center">
+      <a href="/">
+        <h1 class="font-mono text-2xl font-bold">Kaivalya Adgulwar</h1>
+      </a>
+      <div class="flex flex-row justify-between gap-3 align-middle items-center my-1">
+        <a class="flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white text-normal px-4 h-6 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] w-32" href="/">
+          <span class="ms-1">← Home</span>
+        </a>
+        <button aria-label="Toggle dark mode" class="theme-toggle" id="theme-toggle" title="Toggle dark mode" type="button">
+          <span class="theme-toggle-glyph" id="theme-toggle-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Password Gate Card -->
+    <div id="password-gate" class="flex flex-col items-center justify-center py-12">
+      <fieldset class="p-6 w-full max-w-md">
+        <legend class="ms-4 md:ms-0">
+          <h6 class="text-lg mx-2 font-mono italic">sudo login admin</h6>
+        </legend>
+        <form id="password-form" class="flex flex-col gap-4 mt-2">
+          <div class="flex flex-col gap-2">
+            <label for="admin-password" class="font-mono text-xs uppercase tracking-wider opacity-85">Enter Admin Password</label>
+            <input type="password" id="admin-password" class="border border-black dark:border-white p-2 font-mono text-sm bg-transparent outline-none focus:border-[var(--site-link)]" required>
+          </div>
+          <button type="submit" class="flex flex-row items-center justify-center align-middle rounded-none outline outline-1 outline-black dark:outline-white dark:hover:bg-white dark:hover:text-black hover:bg-black hover:text-white text-normal font-mono font-bold px-4 h-8 shadow-[3px_3px_0px_1px_rgba(0,0,0,0.5)] dark:shadow-[3px_3px_0px_1px_rgba(255,255,255,0.6)] bg-[var(--site-text)] text-[var(--site-panel)]">
+            Login
+          </button>
+          <div id="login-error" class="text-xs text-red-500 font-mono hidden">❌ Invalid password. Try again.</div>
+        </form>
+      </fieldset>
+    </div>
+
+    <!-- Admin Panel Content (Initially hidden) -->
+    <div id="admin-content" class="flex flex-col gap-6 hidden">
+      <!-- Pending Recommendations -->
+      <fieldset class="p-4 pt-2">
+        <legend class="ms-4 md:ms-0">
+          <h6 class="text-lg mx-2 font-mono italic">cat ~/pending_recommendations.json</h6>
+        </legend>
+        <div id="pending-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+          <!-- Pending items go here -->
+        </div>
+      </fieldset>
+
+      <!-- Approved Recommendations -->
+      <fieldset class="p-4 pt-2">
+        <legend class="ms-4 md:ms-0">
+          <h6 class="text-lg mx-2 font-mono italic">cat ~/approved_recommendations.json</h6>
+        </legend>
+        <div id="approved-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+          <!-- Approved items go here -->
+        </div>
+      </fieldset>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      // Theme Toggle Script
+      const toggle = document.getElementById("theme-toggle");
+      const icon = document.getElementById("theme-toggle-icon");
+      const root = document.documentElement;
+
+      function syncThemeIcon() {
+        if (icon) {
+          icon.classList.toggle("is-sun", root.classList.contains("dark"));
+        }
+      }
+
+      if (toggle) {
+        syncThemeIcon();
+        toggle.addEventListener("click", () => {
+          root.classList.toggle("dark");
+          localStorage.setItem("theme", root.classList.contains("dark") ? "dark" : "light");
+          syncThemeIcon();
+        });
+      }
+    })();
+  </script>
+
+  <script>
+    (() => {
+      const passwordGate = document.getElementById("password-gate");
+      const adminContent = document.getElementById("admin-content");
+      const passwordForm = document.getElementById("password-form");
+      const passwordInput = document.getElementById("admin-password");
+      const loginError = document.getElementById("login-error");
+      
+      const pendingList = document.getElementById("pending-list");
+      const approvedList = document.getElementById("approved-list");
+
+      // Password: admin
+      const ADMIN_PASSWORD = "admin";
+
+      passwordForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (passwordInput.value === ADMIN_PASSWORD) {
+          passwordGate.classList.add("hidden");
+          adminContent.classList.remove("hidden");
+          loadDashboard();
+        } else {
+          loginError.classList.remove("hidden");
+          passwordInput.value = "";
+          passwordInput.focus();
+        }
+      });
+
+      function getRecommendations() {
+        const dataStr = localStorage.getItem("portfolio_recommendations");
+        return dataStr ? JSON.parse(dataStr) : [];
+      }
+
+      function saveRecommendations(data) {
+        localStorage.setItem("portfolio_recommendations", JSON.stringify(data));
+      }
+
+      window.handleAccept = (id) => {
+        const data = getRecommendations();
+        const updated = data.map(item => {
+          if (item.id === id) {
+            item.status = "approved";
+          }
+          return item;
+        });
+        saveRecommendations(updated);
+        loadDashboard();
+      };
+
+      window.handleDecline = (id) => {
+        if (confirm("Are you sure you want to decline and delete this recommendation?")) {
+          const data = getRecommendations();
+          const updated = data.filter(item => item.id !== id);
+          saveRecommendations(updated);
+          loadDashboard();
+        }
+      };
+
+      window.handleDelete = (id) => {
+        if (confirm("Are you sure you want to delete this approved recommendation?")) {
+          const data = getRecommendations();
+          const updated = data.filter(item => item.id !== id);
+          saveRecommendations(updated);
+          loadDashboard();
+        }
+      };
+
+      const escape = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+      function loadDashboard() {
+        const data = getRecommendations();
+        const pending = data.filter(item => item.status === "pending");
+        const approved = data.filter(item => item.status === "approved");
+
+        // Load Pending
+        if (pending.length === 0) {
+          pendingList.innerHTML = `<div class="font-mono text-xs opacity-60 col-span-full py-4 text-center">No pending recommendations.</div>`;
+        } else {
+          pendingList.innerHTML = "";
+          pending.forEach(rec => {
+            const card = document.createElement("div");
+            card.className = "border border-black/30 dark:border-white/25 p-4 bg-[var(--site-panel)] shadow-[3px_3px_0_var(--site-shadow)] relative flex flex-col justify-between";
+            card.innerHTML = `
+              <div>
+                <p class="text-sm italic opacity-95 mb-4 font-sans leading-relaxed text-black dark:text-white" style="word-break: break-word;">${escape(rec.text)}</p>
+              </div>
+              <div class="border-t border-black/10 dark:border-white/10 pt-2 flex flex-col font-mono">
+                <span class="font-bold text-xs text-black dark:text-white">${escape(rec.name)}</span>
+                <span class="text-[10px] opacity-60 text-black dark:text-white mb-3">${escape(rec.position)} @ ${escape(rec.company)}</span>
+                <div class="flex gap-2 mt-2">
+                  <button onclick="handleAccept('${rec.id}')" class="btn-action btn-accept">Accept</button>
+                  <button onclick="handleDecline('${rec.id}')" class="btn-action btn-decline">Decline</button>
+                </div>
+              </div>
+            `;
+            pendingList.appendChild(card);
+          });
+        }
+
+        // Load Approved
+        if (approved.length === 0) {
+          approvedList.innerHTML = `<div class="font-mono text-xs opacity-60 col-span-full py-4 text-center">No approved recommendations yet.</div>`;
+        } else {
+          approvedList.innerHTML = "";
+          approved.forEach(rec => {
+            const card = document.createElement("div");
+            card.className = "border border-black/30 dark:border-white/25 p-4 bg-[var(--site-panel)] shadow-[3px_3px_0_var(--site-shadow)] relative flex flex-col justify-between";
+            card.innerHTML = `
+              <div>
+                <p class="text-sm italic opacity-95 mb-4 font-sans leading-relaxed text-black dark:text-white" style="word-break: break-word;">${escape(rec.text)}</p>
+              </div>
+              <div class="border-t border-black/10 dark:border-white/10 pt-2 flex flex-col font-mono">
+                <span class="font-bold text-xs text-black dark:text-white">${escape(rec.name)}</span>
+                <span class="text-[10px] opacity-60 text-black dark:text-white mb-3">${escape(rec.position)} @ ${escape(rec.company)}</span>
+                <div class="flex gap-2 mt-2">
+                  <button onclick="handleDelete('${rec.id}')" class="btn-action btn-delete">Delete</button>
+                </div>
+              </div>
+            `;
+            approvedList.appendChild(card);
+          });
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

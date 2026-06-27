@@ -117,6 +117,154 @@
       background: var(--site-panel);
       box-shadow: 4px 4px 0 var(--site-shadow);
     }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-container {
+      background: var(--site-panel);
+      border: 2px solid var(--site-border-strong);
+      box-shadow: 8px 8px 0 var(--site-shadow-strong);
+      width: min(500px, 90vw);
+      padding: 1.5rem;
+      transform: scale(0.95);
+      transition: transform 0.2s ease;
+    }
+    .modal-overlay.is-open .modal-container {
+      transform: scale(1);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--site-border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .modal-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .modal-close-btn {
+      width: 1.85rem;
+      height: 1.85rem;
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      box-shadow: 2px 2px 0 var(--site-shadow);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-close-btn:hover {
+      background: var(--site-text);
+      color: var(--site-panel);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .form-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+    }
+    .form-input {
+      border: 1px solid var(--site-border-strong);
+      background: var(--site-panel);
+      color: var(--site-text);
+      padding: 0.5rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      box-shadow: 2px 2px 0 var(--site-shadow);
+      border-radius: 0;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--site-link);
+      box-shadow: 2px 2px 0 var(--site-link);
+    }
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .btn-submit, .btn-cancel {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      padding: 0.4rem 1.2rem;
+      border: 1px solid var(--site-border-strong);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--site-shadow-strong);
+      font-weight: bold;
+    }
+    .btn-submit {
+      background: var(--site-text);
+      color: var(--site-panel);
+    }
+    .btn-submit:hover {
+      opacity: 0.9;
+    }
+    .btn-cancel {
+      background: var(--site-panel);
+      color: var(--site-text);
+    }
+    .btn-cancel:hover {
+      background: var(--site-text);
+      color: var(--site-panel);
+    }
+    /* Toast styles */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 1100;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--site-panel);
+      border: 2px solid var(--site-border-strong);
+      box-shadow: 4px 4px 0 var(--site-shadow-strong);
+      padding: 0.75rem 1.25rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: auto;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -174,5 +322,152 @@
     })();
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- Recommendation Modal HTML -->
+  <div id="recommend-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 id="modal-title" class="modal-title">Write Recommendation</h2>
+        <button id="close-recommend-modal" class="modal-close-btn" aria-label="Close modal" type="button">x</button>
+      </div>
+      <form id="recommend-form">
+        <div class="form-group">
+          <label for="rec-name" class="form-label">Name</label>
+          <input type="text" id="rec-name" class="form-input" required placeholder="e.g. John Doe">
+        </div>
+        <div class="form-group">
+          <label for="rec-company" class="form-label">Company Name</label>
+          <input type="text" id="rec-company" class="form-input" required placeholder="e.g. Acme Corp">
+        </div>
+        <div class="form-group">
+          <label for="rec-position" class="form-label">Position</label>
+          <input type="text" id="rec-position" class="form-input" required placeholder="e.g. Software Engineer">
+        </div>
+        <div class="form-group">
+          <label for="rec-text" class="form-label">Recommendation Text</label>
+          <textarea id="rec-text" class="form-input" rows="4" required placeholder="Write your recommendation here..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancel-recommend" class="btn-cancel">Cancel</button>
+          <button type="submit" class="btn-submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Recommendations Handler Script -->
+  <script>
+    (() => {
+      const modal = document.getElementById("recommend-modal");
+      const cancelBtn = document.getElementById("cancel-recommend");
+      const closeBtn = document.getElementById("close-recommend-modal");
+      const form = document.getElementById("recommend-form");
+      const toastContainer = document.getElementById("toast-container");
+
+      function openModal() {
+        if (modal) {
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden", "false");
+          const firstInput = document.getElementById("rec-name");
+          if (firstInput) firstInput.focus();
+        }
+      }
+
+      function closeModal() {
+        if (modal) {
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+          if (form) form.reset();
+        }
+      }
+
+      function showToast(message) {
+        if (!toastContainer) return;
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        toastContainer.appendChild(toast);
+        
+        // Trigger reflow
+        toast.offsetHeight;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 300);
+        }, 3500);
+      }
+
+      // Delegate click for open-recommend-modal
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest("#open-recommend-modal");
+        if (btn) {
+          e.preventDefault();
+          openModal();
+        }
+      });
+
+      if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+      if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+      // Close on backdrop click
+      if (modal) {
+        modal.addEventListener("mousedown", (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      // Close on Escape
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal && modal.classList.contains("is-open")) {
+          closeModal();
+        }
+      });
+
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("rec-name").value.trim();
+          const company = document.getElementById("rec-company").value.trim();
+          const position = document.getElementById("rec-position").value.trim();
+          const text = document.getElementById("rec-text").value.trim();
+
+          if (!name || !company || !position || !text) {
+            showToast("⚠️ All fields are required.");
+            return;
+          }
+
+          const newRecommendation = {
+            id: "rec_" + Date.now(),
+            name,
+            company,
+            position,
+            text,
+            status: "pending",
+            submittedAt: new Date().toISOString()
+          };
+
+          try {
+            const dataStr = localStorage.getItem("portfolio_recommendations");
+            let data = [];
+            if (dataStr) {
+              data = JSON.parse(dataStr);
+            }
+            data.push(newRecommendation);
+            localStorage.setItem("portfolio_recommendations", JSON.stringify(data));
+
+            showToast("✅ Recommendation submitted! Awaiting admin approval.");
+            closeModal();
+          } catch (err) {
+            console.error(err);
+            showToast("❌ Failed to save. Please try again.");
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -30,7 +30,7 @@
 
     <!-- random.md / interactive extras -->
     {% call fieldset("cat ~/random.md", class="!bg-transparent") %}
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-4">
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1 font-mono">
           <a class="flex flex-row items-center justify-between border border-black/30 dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black p-3 shadow-[3px_3px_0_var(--site-shadow-strong)] text-base font-bold bg-var(--site-panel-soft)" href="/random/travel">
             <span>🗺️ Travel</span>
@@ -45,74 +45,172 @@
           <a class="flex flex-row items-center justify-between border border-black/30 dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black p-3 shadow-[3px_3px_0_var(--site-shadow-strong)] text-base font-bold bg-var(--site-panel-soft)" href="/random/toolbox">
             <span>🛠️ Toolbox</span>
           </a>
+          
+          <button id="open-recommend-modal" class="flex flex-row items-center justify-between border-2 border-[var(--site-link)] hover:bg-[var(--site-link)] hover:text-white p-3 shadow-[3px_3px_0_var(--site-shadow-strong)] text-base font-bold bg-var(--site-panel-soft) cursor-pointer select-none text-left font-mono" type="button">
+            <span>✍️ Recommend Me</span>
+          </button>
+        </div>
+
+        <!-- Recommendations Display Section -->
+        <div id="recommendations-display-wrap" class="mt-4 border-t border-black/10 dark:border-white/10 pt-4 hidden">
+          <h4 class="font-mono text-base font-bold mb-3 flex items-center justify-between">
+            <span>📋 Recommendations</span>
+            <span class="text-xs opacity-60 font-normal italic">displayed in random order</span>
+          </h4>
+          <div id="recommendations-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Dynamic cards inject here -->
+          </div>
         </div>
       </div>
     {% endcall %}
 
+    <script>
+      (() => {
+        const displayWrap = document.getElementById("recommendations-display-wrap");
+        const listContainer = document.getElementById("recommendations-list");
+        if (!listContainer) return;
+
+        function shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+          return array;
+        }
+
+        function loadRecommendations() {
+          const dataStr = localStorage.getItem("portfolio_recommendations");
+          if (!dataStr) {
+            showEmptyState();
+            return;
+          }
+
+          try {
+            const data = JSON.parse(dataStr);
+            const approved = data.filter(item => item.status === "approved");
+
+            if (approved.length === 0) {
+              showEmptyState();
+              return;
+            }
+
+            // Shuffle array
+            shuffle(approved);
+
+            listContainer.innerHTML = "";
+            approved.forEach(rec => {
+              const card = document.createElement("div");
+              card.className = "border border-black/20 dark:border-white/20 p-4 bg-[var(--site-panel)] shadow-[3px_3px_0_var(--site-shadow)] relative flex flex-col justify-between min-h-[120px]";
+              
+              const escape = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+
+              card.innerHTML = `
+                <div>
+                  <span class="absolute top-1 right-3 text-4xl opacity-10 font-serif leading-none" aria-hidden="true">“</span>
+                  <p class="text-sm italic opacity-95 mb-4 font-sans leading-relaxed text-black dark:text-white" style="word-break: break-word;">${escape(rec.text)}</p>
+                </div>
+                <div class="border-t border-black/10 dark:border-white/10 pt-2 flex flex-col font-mono mt-auto">
+                  <span class="font-bold text-xs text-black dark:text-white">${escape(rec.name)}</span>
+                  <span class="text-[10px] opacity-60 text-black dark:text-white">${escape(rec.position)} @ ${escape(rec.company)}</span>
+                </div>
+              `;
+              listContainer.appendChild(card);
+            });
+
+            if (displayWrap) displayWrap.classList.remove("hidden");
+          } catch (e) {
+            console.error("Error loading recommendations:", e);
+            showEmptyState();
+          }
+        }
+
+        function showEmptyState() {
+          if (displayWrap) {
+            displayWrap.classList.add("hidden");
+          }
+        }
+
+        // Initial load
+        loadRecommendations();
+
+        // Listen for storage updates
+        window.addEventListener("storage", (e) => {
+          if (e.key === "portfolio_recommendations") {
+            loadRecommendations();
+          }
+        });
+      })();
+    </script>
+
     <!-- experience.md -->
     {% call fieldset("cat ~/experience.md") %}
       <div class="text-sm font-sans flex flex-col gap-4">
-        <p class="m-0 opacity-70 font-mono">the more professional-looking part of this</p>
+        <p class="m-0 opacity-70 font-mono">the more professional-looking part of this (click company card to expand/collapse details)</p>
         
         <!-- InfoSpeed Card -->
-        <div class="flex flex-row gap-4 border border-black/10 dark:border-white/10 p-4 bg-[var(--site-panel)] shadow-[3px_3px_0_var(--site-shadow)] relative items-start">
-          <div class="w-14 h-14 border border-black/10 dark:border-white/10 flex items-center justify-center bg-[var(--site-panel-soft)] shrink-0 overflow-hidden">
-            <img src="/assets/infospeed.png" alt="InfoSpeed Services Logo" class="w-full h-full object-cover" />
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex justify-between items-start flex-wrap gap-1">
-              <div>
-                <h4 class="font-bold text-lg m-0 text-black dark:text-white">InfoSpeed Services</h4>
-                <p class="text-sm font-semibold text-black/80 dark:text-white/80 m-0">Software Developer Intern</p>
-                <p class="text-xs opacity-60 m-0">Pune, Maharashtra, India</p>
-              </div>
-              <p class="text-sm font-mono opacity-80 m-0">01/2026 - 04/2026</p>
+        <div id="experience-card" class="flex flex-col border border-black/10 dark:border-white/10 p-4 bg-[var(--site-panel)] shadow-[3px_3px_0_var(--site-shadow)] relative cursor-pointer hover:bg-[var(--site-panel-soft)] transition-colors duration-150 group">
+          <div class="flex flex-row gap-4 items-start w-full">
+            <div class="w-14 h-14 border border-black/10 dark:border-white/10 flex items-center justify-center bg-[var(--site-panel-soft)] shrink-0 overflow-hidden">
+              <img src="/assets/infospeed.png" alt="InfoSpeed Services Logo" class="w-full h-full object-cover" />
             </div>
-            <ul class="list-disc list-outside ms-4 text-xs opacity-80 mt-2 font-mono leading-relaxed flex flex-col gap-1">
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-start flex-wrap gap-1">
+                <div>
+                  <h4 class="font-bold text-lg m-0 text-black dark:text-white flex items-center gap-2">
+                    <span>InfoSpeed Services</span>
+                    <span id="exp-arrow" class="text-xs transition-transform duration-200 opacity-60 inline-block">▶</span>
+                  </h4>
+                  <p class="text-sm font-semibold text-black/80 dark:text-white/80 m-0">Software Developer Intern</p>
+                  <p class="text-xs opacity-60 m-0">Pune, Maharashtra, India</p>
+                </div>
+                <p class="text-sm font-mono opacity-80 m-0">01/2026 - 04/2026</p>
+              </div>
+            </div>
+            <!-- Star Badge -->
+            <div class="w-6 h-6 rounded-full border border-black/10 dark:border-white/10 bg-yellow-500/10 flex items-center justify-center text-xs ms-2 shrink-0 self-center">
+              ⭐
+            </div>
+          </div>
+          
+          <!-- Collapsible Content -->
+          <div id="exp-content" class="overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out md:pl-[4.5rem]">
+            <ul class="list-disc list-outside ms-4 md:ms-0 text-xs opacity-80 mt-3 font-mono leading-relaxed flex flex-col gap-1 text-black dark:text-white">
               <li>Reduced manual shortlisting effort by 60% by analyzing the end-to-end hiring workflow, identifying key bottlenecks, and building a structured data pipeline.</li>
               <li>Improved query performance across 500+ candidate records by redesigning the ranking logic with optimized schemas and indexing strategies.</li>
               <li>Strengthened candidate comparison accuracy by developing modular APIs that extracted and parsed resume data in a consistent, structured format.</li>
             </ul>
           </div>
-          <!-- Star Badge -->
-          <div class="w-6 h-6 rounded-full border border-black/10 dark:border-white/10 bg-yellow-500/10 flex items-center justify-center text-xs ms-2 shrink-0 self-center">
-            ⭐
-          </div>
         </div>
       </div>
     {% endcall %}
+
+    <script>
+      (() => {
+        const card = document.getElementById("experience-card");
+        const content = document.getElementById("exp-content");
+        const arrow = document.getElementById("exp-arrow");
+        if (!card || !content || !arrow) return;
+
+        card.addEventListener("click", () => {
+          const isCollapsed = content.style.maxHeight === "" || content.style.maxHeight === "0px";
+          if (isCollapsed) {
+            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.opacity = "1";
+            arrow.style.transform = "rotate(90deg)";
+          } else {
+            content.style.maxHeight = "0px";
+            content.style.opacity = "0";
+            arrow.style.transform = "rotate(0deg)";
+          }
+        });
+      })();
+    </script>
 
     <!-- projects -->
     {% call fieldset("ls ~/projects.md") %}
       <div class="flex flex-col gap-2">
         <p class="text-sm opacity-70 mb-2 font-mono">a few things i want people to actually click on</p>
         {{ lists["projects"]|safe }}
-      </div>
-    {% endcall %}
-
-
-
-    <!-- certifications.md -->
-    {% call fieldset("cat ~/certifications.md", class="!bg-transparent") %}
-      <div class="font-sans text-sm">
-        <h4 class="font-bold font-mono text-base border-b border-black/20 dark:border-white/20 pb-1 mb-2">📜 Certifications & Simulations</h4>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs mt-3">
-          <div class="border border-dashed border-black/30 dark:border-white/30 p-3 bg-[var(--site-panel-soft)]">
-            <div class="text-sm font-bold text-black dark:text-white mb-1">Sheryians Coding School</div>
-            <p class="m-0 text-xs opacity-80 leading-normal">Job Ready Cohort</p>
-            <span class="inline-block mt-2 text-[10px] text-[#0f62fe] dark:text-[#8bb7ff] border border-[#0f62fe]/30 dark:border-[#8bb7ff]/30 px-1">Completed</span>
-          </div>
-          <div class="border border-dashed border-black/30 dark:border-white/30 p-3 bg-[var(--site-panel-soft)]">
-            <div class="text-sm font-bold text-black dark:text-white mb-1">J.P. Morgan Chase</div>
-            <p class="m-0 text-xs opacity-80 leading-normal">Quantitative Research Simulation (Forage)</p>
-            <span class="inline-block mt-2 text-[10px] text-[#0f62fe] dark:text-[#8bb7ff] border border-[#0f62fe]/30 dark:border-[#8bb7ff]/30 px-1">Completed</span>
-          </div>
-          <div class="border border-dashed border-black/30 dark:border-white/30 p-3 bg-[var(--site-panel-soft)]">
-            <div class="text-sm font-bold text-black dark:text-white mb-1">Buildspace</div>
-            <p class="m-0 text-xs opacity-80 leading-normal">Nights & Weekends Season 5</p>
-            <span class="inline-block mt-2 text-[10px] text-[#0f62fe] dark:text-[#8bb7ff] border border-[#0f62fe]/30 dark:border-[#8bb7ff]/30 px-1">Completed</span>
-          </div>
-        </div>
       </div>
     {% endcall %}
 
