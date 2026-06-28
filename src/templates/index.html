@@ -97,6 +97,8 @@
             // Shuffle array
             shuffle(approved);
 
+            const isAdmin = sessionStorage.getItem("admin_logged_in") === "true";
+
             listContainer.innerHTML = "";
             approved.forEach(rec => {
               const card = document.createElement("div");
@@ -104,10 +106,20 @@
               
               const escape = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 
+              let deleteBtnHtml = "";
+              if (isAdmin) {
+                deleteBtnHtml = `
+                  <button onclick="deleteRecommendationDirectly('${rec.id}')" class="absolute top-2 right-2 text-xs bg-red-600 hover:bg-red-700 text-white font-mono px-1.5 py-0.5 border border-black shadow-[1px_1px_0_rgba(0,0,0,0.5)] cursor-pointer" type="button" title="Delete recommendation">
+                    Delete
+                  </button>
+                `;
+              }
+
               card.innerHTML = `
                 <div>
                   <span class="absolute top-1 right-3 text-4xl opacity-10 font-serif leading-none" aria-hidden="true">“</span>
-                  <p class="text-sm italic opacity-95 mb-4 font-sans leading-relaxed text-black dark:text-white" style="word-break: break-word;">${escape(rec.text)}</p>
+                  ${deleteBtnHtml}
+                  <p class="text-sm italic opacity-95 mb-4 font-sans leading-relaxed text-black dark:text-white pr-10" style="word-break: break-word;">${escape(rec.text)}</p>
                 </div>
                 <div class="border-t border-black/10 dark:border-white/10 pt-2 flex flex-col font-mono mt-auto">
                   <span class="font-bold text-xs text-black dark:text-white">${escape(rec.name)}</span>
@@ -124,6 +136,24 @@
           }
         }
 
+        window.deleteRecommendationDirectly = (id) => {
+          if (confirm("Are you sure you want to delete this recommendation?")) {
+            const dataStr = localStorage.getItem("portfolio_recommendations");
+            if (dataStr) {
+              try {
+                const data = JSON.parse(dataStr);
+                const updated = data.filter(item => item.id !== id);
+                localStorage.setItem("portfolio_recommendations", JSON.stringify(updated));
+                loadRecommendations();
+                // Reload inline admin console lists if they exist
+                document.dispatchEvent(new CustomEvent("recommendationSubmitted"));
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          }
+        };
+
         function showEmptyState() {
           if (displayWrap) {
             displayWrap.classList.add("hidden");
@@ -139,13 +169,16 @@
             loadRecommendations();
           }
         });
+
+        // Custom event triggered by admin acceptance/declines or logins
+        document.addEventListener("recommendationSubmitted", loadRecommendations);
       })();
     </script>
 
     <!-- experience.md -->
     {% call fieldset("cat ~/experience.md") %}
       <div class="text-sm font-sans flex flex-col gap-4">
-        <p class="m-0 opacity-70 font-mono">the more professional-looking part of this (click company card to expand/collapse details)</p>
+        <p class="m-0 opacity-70 font-mono">the more professional-looking part of this</p>
         
         <!-- InfoSpeed Card -->
         <div id="experience-card" class="flex flex-col border border-black/10 dark:border-white/10 p-4 bg-[var(--site-panel)] shadow-[3px_3px_0_var(--site-shadow)] relative cursor-pointer hover:bg-[var(--site-panel-soft)] transition-colors duration-150 group">
@@ -228,5 +261,38 @@
         </ul>
       </div>
     {% endcall %}
+
+    <!-- Admin Trigger Footer -->
+    <div class="flex justify-center items-center mt-8 mb-4">
+      <button id="open-admin-modal" class="text-xs opacity-40 hover:opacity-100 transition-opacity font-mono cursor-pointer flex items-center gap-1 select-none" type="button" aria-label="Admin Access">
+        <span>🔒 Admin Access</span>
+      </button>
+    </div>
+
+    <!-- Inline Admin Panel -->
+    <div id="inline-admin-panel" class="mt-6 hidden">
+      {% call fieldset("cat ~/admin_dashboard.md", class="!border-red-500/60 dark:!border-red-500/50") %}
+        <div class="flex justify-between items-center border-b border-black/10 dark:border-white/10 pb-2 mb-4 font-mono">
+          <h5 class="text-red-500 font-bold m-0 flex items-center gap-1">
+            <span>⚙️ Moderation Console</span>
+          </h5>
+          <button id="admin-logout-btn" class="btn-cancel !text-xs !shadow-none !px-2 !py-0.5" type="button">Logout</button>
+        </div>
+        <div class="flex flex-col gap-6">
+          <div>
+            <h6 class="font-mono text-sm font-bold text-black dark:text-white mb-2">Pending Approvals:</h6>
+            <div id="inline-pending-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Pending items populate here -->
+            </div>
+          </div>
+          <div class="border-t border-black/10 dark:border-white/10 pt-4">
+            <h6 class="font-mono text-sm font-bold text-black dark:text-white mb-2">Approved Reviews:</h6>
+            <div id="inline-approved-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Approved items populate here -->
+            </div>
+          </div>
+        </div>
+      {% endcall %}
+    </div>
   </div>
 {% endblock %}

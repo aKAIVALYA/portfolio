@@ -1,7 +1,19 @@
 import os
 import argparse
+import hashlib
 from shutil import rmtree
 from urllib.parse import urljoin
+
+def load_env():
+    env_vars = {}
+    if os.path.exists(".env"):
+        with open(".env", "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, val = line.split("=", 1)
+                    env_vars[key.strip()] = val.strip().strip('"').strip("'")
+    return env_vars
 
 import mistune
 import frontmatter
@@ -35,6 +47,12 @@ env = Environment(
     loader=FileSystemLoader(f"{script_path}/templates"),
     autoescape=select_autoescape(["html"]),
 )
+
+# Load password and set global hash for all templates
+env_vars = load_env()
+admin_pass = env_vars.get("ADMIN_PASSWORD", "admin")
+admin_hash = hashlib.sha256(admin_pass.encode("utf-8")).hexdigest()
+env.globals["admin_password_hash"] = admin_hash
 
 if not args.no_clean:
     # delete everything inside the output directory
