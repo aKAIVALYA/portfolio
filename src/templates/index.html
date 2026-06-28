@@ -117,7 +117,7 @@
 
               card.innerHTML = `
                 <div>
-                  <span class="absolute top-1 right-3 text-4xl opacity-10 font-serif leading-none" aria-hidden="true">“</span>
+                  <span class="absolute top-1 right-3 text-4xl opacity-10 font-serif leading-none pointer-events-none" aria-hidden="true">“</span>
                   ${deleteBtnHtml}
                   <p class="text-sm italic opacity-95 mb-4 font-sans leading-relaxed text-black dark:text-white pr-10" style="word-break: break-word;">${escape(rec.text)}</p>
                 </div>
@@ -261,6 +261,36 @@
         </ul>
       </div>
     {% endcall %}
+
+    <!-- Visitor Counter -->
+    <div class="flex justify-center items-center mt-6 font-mono text-xs opacity-75">
+      <div class="border border-black/25 dark:border-white/20 px-3 py-1.5 bg-[var(--site-panel-soft)] shadow-[2px_2px_0_var(--site-shadow)] flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        <span class="opacity-70">Visits:</span>
+        <span id="visit-counter-val" class="font-bold tracking-wider">000000</span>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const counterEl = document.getElementById("visit-counter-val");
+        if (!counterEl) return;
+
+        let visits = parseInt(localStorage.getItem("portfolio_visit_count"), 10);
+        if (isNaN(visits)) {
+          visits = 1337;
+        }
+
+        const isNewSession = !sessionStorage.getItem("portfolio_session_counted");
+        if (isNewSession) {
+          visits += 1;
+          localStorage.setItem("portfolio_visit_count", visits.toString());
+          sessionStorage.setItem("portfolio_session_counted", "true");
+        }
+
+        counterEl.textContent = visits.toString().padStart(6, "0");
+      })();
+    </script>
 
     <!-- Admin Trigger Footer -->
     <div class="flex justify-center items-center mt-8 mb-4">

@@ -237,6 +237,43 @@
       background: var(--site-text);
       color: var(--site-panel);
     }
+    /* Action / Moderation console buttons styling */
+    .btn-action {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--site-border-strong);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--site-shadow-strong);
+      font-weight: bold;
+      transition: all 0.1s ease;
+      background: var(--site-panel);
+      color: var(--site-text);
+    }
+    .btn-action:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--site-shadow-strong);
+    }
+    .btn-action:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 var(--site-shadow-strong);
+    }
+    .btn-accept {
+      background: #198754;
+      color: white;
+      border-color: #157347;
+    }
+    .btn-accept:hover {
+      background: #157347;
+    }
+    .btn-decline, .btn-delete {
+      background: #dc3545;
+      color: white;
+      border-color: #bb2d3b;
+    }
+    .btn-decline:hover, .btn-delete:hover {
+      background: #bb2d3b;
+    }
     /* Toast styles */
     .toast-container {
       position: fixed;
