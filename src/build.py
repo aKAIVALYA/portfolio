@@ -50,7 +50,7 @@ env = Environment(
 
 # Load password and set global hash for all templates
 env_vars = load_env()
-admin_pass = env_vars.get("ADMIN_PASSWORD", "admin")
+admin_pass = env_vars.get("ADMIN_PASSWORD") or os.environ.get("ADMIN_PASSWORD") or "admin"
 admin_hash = hashlib.sha256(admin_pass.encode("utf-8")).hexdigest()
 env.globals["admin_password_hash"] = admin_hash
 
